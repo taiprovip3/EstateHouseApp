@@ -82,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtRole" />
 
     <Button
-        android:id="@+id/button11"
+        android:id="@+id/bl_goCart"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
@@ -93,12 +93,12 @@
         android:textColor="#B3000000"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/button8"
-        app:layout_constraintEnd_toStartOf="@+id/btnSettings"
+        app:layout_constraintEnd_toStartOf="@+id/bl_goSetting"
         app:layout_constraintStart_toEndOf="@+id/button8"
         app:layout_constraintTop_toTopOf="@+id/button8" />
 
     <Button
-        android:id="@+id/btnSettings"
+        android:id="@+id/bl_goSetting"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
@@ -107,9 +107,9 @@
         android:textAllCaps="false"
         android:textColor="#B3000000"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button11"
+        app:layout_constraintBottom_toBottomOf="@+id/bl_goCart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button11" />
+        app:layout_constraintTop_toTopOf="@+id/bl_goCart" />
 
     <TextView
         android:id="@+id/txtBalance"
@@ -122,7 +122,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button11" />
+        app:layout_constraintTop_toBottomOf="@+id/bl_goCart" />
 
     <TextView
         android:id="@+id/textView7"

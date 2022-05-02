@@ -272,7 +272,7 @@ public class HomepageScreen extends AppCompatActivity {
             txtViewlogin.getPaint().setUnderlineText(false);
             txtViewlogin.setTextColor(Color.BLACK);
         }
-    }//end onCreate
+    }//end onStart
 
     private boolean isLogged() {
         currentUser = mAuth.getCurrentUser();

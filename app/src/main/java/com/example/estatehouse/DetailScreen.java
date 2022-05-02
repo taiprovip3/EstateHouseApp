@@ -1,9 +1,12 @@
 package com.example.estatehouse;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.estatehouse.entity.House;
 import com.example.estatehouse.entity.HouseCart;
+import com.example.estatehouse.entity.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,7 +42,7 @@ import vn.thanguit.toastperfect.ToastPerfect;
 public class DetailScreen extends AppCompatActivity {
 
     private ImageView imageHouseView, btnBack;
-    private TextView priceHouseView, addressHouseView, bedroomNumberView, bathroomNumberView, livingareView, sellerView, descriptionView;
+    private TextView priceHouseView, addressHouseView, bedroomNumberView, bathroomNumberView, livingareView, sellerView, descriptionView, balanceView, typeView;
     private Button btnBuy, btnAddToCart;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -47,9 +51,13 @@ public class DetailScreen extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private CollectionReference cartReference, userReference;
-    String imageHouse, addressHouse, documentIdHouse, descriptionHouse, sellerHouse;
+    String imageHouse, addressHouse, documentIdHouse, descriptionHouse, sellerHouse, typeHouse;
     double priceHouse;
     int bedroomHouse, bathroomHouse, livingareaHouse;
+    User user;
+    AlertDialog dialogBuy;
+    AlertDialog.Builder builderBuy;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +77,7 @@ public class DetailScreen extends AppCompatActivity {
             documentIdHouse = bundle.getString("documentIdHouse", "");
             descriptionHouse = bundle.getString("descriptionHouse", "No description");
             sellerHouse = bundle.getString("sellerHouse", "Incognito");
+            typeHouse = bundle.getString("typeHouse", "BUY");
 
             imageReference = storageReference.child("images/" + imageHouse);
             imageReference.getDownloadUrl()
@@ -93,6 +102,7 @@ public class DetailScreen extends AppCompatActivity {
             livingareView.setText(""+livingareaHouse);
             descriptionView.setText(descriptionHouse);
             sellerView.setText(sellerHouse);
+            typeView.setText(typeHouse);
         }
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,32 +131,51 @@ public class DetailScreen extends AppCompatActivity {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userReference.whereEqualTo("email", currentUser.getEmail())
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
-                                    double balanceUser = 0.0;
-                                    String documentId = "";
-                                    for(QueryDocumentSnapshot document : task.getResult()){
-                                        balanceUser = document.getDouble("balance");
-                                        documentId = document.getId();
-                                    }
-                                    if(balanceUser < priceHouse){
-                                        ToastPerfect.makeText(DetailScreen.this, ToastPerfect.ERROR, "You don't have enough $ to purchase", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
-                                    } else{
-                                        userReference.document(documentId)
-                                                .update("balance", balanceUser - priceHouse);
-                                        ToastPerfect.makeText(DetailScreen.this, ToastPerfect.SUCCESS, "You purchased success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
-                                    }
-                                }
-                            }
-                        });
-
+                builderBuy = new AlertDialog.Builder(DetailScreen.this);
+                builderBuy.setTitle("Confirmation buy/rent a house");
+                builderBuy.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                builderBuy.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if(user.getBalance() < priceHouse){
+                            ToastPerfect.makeText(DetailScreen.this, ToastPerfect.ERROR, "You don't have enough $ to purchase", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
+                        } else{
+                            double moneyLeft = user.getBalance() - priceHouse;
+                            user.setBalance(moneyLeft);
+                            balanceView.setText("$"+moneyLeft);
+                            userReference.document(user.getDocumentId())
+                                    .update("balance", moneyLeft);
+                            ToastPerfect.makeText(DetailScreen.this, ToastPerfect.SUCCESS, "You purchased success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
+                        }
+                    }
+                });
+                dialogBuy = builderBuy.create();
+                dialogBuy.show();
             }
         });
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        userReference.whereEqualTo("email", currentUser.getEmail())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot document: task.getResult()){
+                                user = document.toObject(User.class);
+                                balanceView.setText("$" + user.getBalance());
+                            }
+                        }
+                    }
+                });
+    }//end onStart
 
     private void anhXa() {
         mAuth = FirebaseAuth.getInstance();
@@ -166,6 +195,8 @@ public class DetailScreen extends AppCompatActivity {
         livingareView = findViewById(R.id.dt_livingareView);
         sellerView = findViewById(R.id.dt_sellerView);
         descriptionView = findViewById(R.id.dt_descriptionView);
+        typeView = findViewById(R.id.dt_typeView);
         btnBack = findViewById(R.id.dt_btnBack);
+        balanceView = findViewById(R.id.dt_balanceView);
     }
 }

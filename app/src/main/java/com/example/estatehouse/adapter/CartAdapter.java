@@ -1,6 +1,7 @@
 package com.example.estatehouse.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -12,8 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import com.example.estatehouse.CartScreen;
+import com.example.estatehouse.DetailScreen;
 import com.example.estatehouse.R;
 import com.example.estatehouse.entity.HouseCart;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,6 +41,8 @@ public class CartAdapter extends BaseAdapter {
     private List<HouseCart> houseCarts;
     private Context context;
     private HouseCart hc;
+    private AlertDialog dialogBuy;
+    private AlertDialog.Builder builderBuy;
 
     public CartAdapter(List<HouseCart> houseCarts, Context context){
         this.houseCarts = houseCarts;
@@ -100,34 +105,46 @@ public class CartAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                CollectionReference userReference = db.collection("users");
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                String email = currentUser.getEmail();
-                userReference.whereEqualTo("email", email)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
-                                    double userBalance = 0.0;
-                                    String documentId = "";
-                                    for(QueryDocumentSnapshot document : task.getResult()){
-                                        userBalance = document.getDouble("balance");
-                                        documentId = document.getId();
+                builderBuy = new AlertDialog.Builder(context);
+                builderBuy.setTitle("Confirmation buy/rent a house");
+                builderBuy.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                builderBuy.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        CollectionReference userReference = db.collection("users");
+                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        String email = currentUser.getEmail();
+                        userReference.whereEqualTo("email", email)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if(task.isSuccessful()){
+                                            double userBalance = 0.0;
+                                            String documentId = "";
+                                            for(QueryDocumentSnapshot document : task.getResult()){
+                                                userBalance = document.getDouble("balance");
+                                                documentId = document.getId();
+                                            }
+                                            if(userBalance < hc.getCost()){
+                                                ToastPerfect.makeText(context, ToastPerfect.ERROR, "You don't have enough $ to purchase", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
+                                            } else{
+                                                userReference.document(documentId)
+                                                        .update("balance", userBalance - hc.getCost());
+                                                ToastPerfect.makeText(context, ToastPerfect.SUCCESS, "You purchased success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
+                                                removeItem();
+                                            }
+                                        }
                                     }
-                                    if(userBalance < hc.getCost()){
-                                        ToastPerfect.makeText(context, ToastPerfect.ERROR, "You don't have enough $ to purchase", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
-                                    } else{
-                                        userReference.document(documentId)
-                                                .update("balance", userBalance - hc.getCost());
-                                        ToastPerfect.makeText(context, ToastPerfect.SUCCESS, "You purchased success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
-                                        removeItem();
-                                    }
-                                }
-                            }
-                        });
+                                });
+                    }
+                });
             }
         });
         return view;

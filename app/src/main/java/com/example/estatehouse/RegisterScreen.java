@@ -22,9 +22,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
@@ -39,6 +42,7 @@ public class RegisterScreen extends AppCompatActivity {
     private String rePassword;
     private FirebaseFirestore db;
     CollectionReference userReference;
+    String documentId = UUID.randomUUID().toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,31 +102,23 @@ public class RegisterScreen extends AppCompatActivity {
                                         userObject.put("phone_number", "");
                                         userObject.put("balance", 0.0);
                                         userObject.put("avatar", "image_6.png");
-                                        userReference.add(userObject)
-                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                    @Override
-                                                    public void onSuccess(DocumentReference documentReference) {
-                                                        Toast.makeText(RegisterScreen.this, "Register success",
-                                                                Toast.LENGTH_SHORT).show();
-                                                        emptyField();
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.d("REGISTER FAILED", "User email "+email+" can't write to database");
-                                                    }
-                                                });
+                                        userObject.put("documentId", documentId);
+                                        userReference
+                                                .document(documentId)
+                                                .set(userObject);
+                                        Toast.makeText(RegisterScreen.this, "Register success",
+                                                Toast.LENGTH_LONG).show();
+                                        emptyField();
                                     } else {
                                         Toast.makeText(RegisterScreen.this, "Register failed",
-                                                Toast.LENGTH_SHORT).show();
+                                                Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });
                 }
                 else{
                     Toast.makeText(RegisterScreen.this, "Password and Repassword are not the same",
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });

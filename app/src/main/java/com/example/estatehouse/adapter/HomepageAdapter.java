@@ -104,6 +104,7 @@ public class HomepageAdapter extends BaseAdapter {
                 bundle.putString("documentIdHouse", h.getDocumentId());
                 bundle.putString("descriptionHouse", h.getDescription());
                 bundle.putString("sellerHouse", h.getSeller());
+                bundle.putString("typeHouse", h.getType());
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

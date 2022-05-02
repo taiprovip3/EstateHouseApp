@@ -112,7 +112,8 @@ public class CartScreen extends AppCompatActivity {
         btnBalance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastPerfect.makeText(CartScreen.this, ToastPerfect.INFORMATION, "Change to balance screen!", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
+                Intent intent = new Intent(CartScreen.this, BalanceScreen.class);
+                startActivity(intent);
             }
         });
     }

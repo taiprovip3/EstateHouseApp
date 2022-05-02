@@ -41,7 +41,8 @@ public class BalanceScreen extends AppCompatActivity {
     private TextView txtName;
     private TextView txtRole;
     private TextView txtBalance;
-    private Button btnSetting;
+    private TextView btnBack;
+    private Button btnSetting, btnCart;
 
     private User user;
 
@@ -64,9 +65,25 @@ public class BalanceScreen extends AppCompatActivity {
         txtName = findViewById(R.id.txtUserName);
         txtRole = findViewById(R.id.txtRole);
         txtBalance=findViewById(R.id.txtBalance);
-        btnSetting=findViewById(R.id.btnSettings);
+        btnSetting=findViewById(R.id.bl_goSetting);
+        btnCart = findViewById(R.id.bl_goCart);
+        btnBack = findViewById(R.id.bl_btnBack);
 
         btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(BalanceScreen.this, ProfieScreen.class);
+                startActivity(intent);
+            }
+        });
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BalanceScreen.this, CartScreen.class);
+                startActivity(intent);
+            }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(BalanceScreen.this, ProfieScreen.class);
@@ -79,7 +96,6 @@ public class BalanceScreen extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         if (isLogged()) {
-            Toast.makeText(BalanceScreen.this, "Loading...", Toast.LENGTH_LONG).show();
             String email = currentUser.getEmail();
             userReference.whereEqualTo("email", email)
                     .get()
@@ -101,7 +117,7 @@ public class BalanceScreen extends AppCompatActivity {
                                     });
                                     txtName.setText(user.getFirstName() + " " + user.getLastName());
                                     txtRole.setText(user.getRole());
-                                    txtBalance.setText(String.valueOf(user.getBalance()));
+                                    txtBalance.setText("$" + String.valueOf(user.getBalance()));
                                     userDao.addUser(user);
                                 }
                             } else
