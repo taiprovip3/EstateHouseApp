@@ -40,6 +40,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="166dp"
         android:text="Phan Tan Tai"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cart_avatarView" />
@@ -51,6 +52,7 @@
         android:layout_marginStart="176dp"
         android:layout_marginEnd="176dp"
         android:text="Member"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cart_fullNameView" />
@@ -60,7 +62,7 @@
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="4dp"
         android:background="#E1D6D6"
         app:layout_constraintEnd_toEndOf="parent"
@@ -126,4 +128,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/image_14" />
+
+    <TextView
+        android:id="@+id/cart_balanceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$99.999"
+        android:textColor="#4CAF50"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/cart_fullNameView"
+        app:layout_constraintStart_toStartOf="@+id/cart_fullNameView"
+        app:layout_constraintTop_toBottomOf="@+id/cart_roleView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

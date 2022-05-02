@@ -48,7 +48,7 @@ public class CartScreen extends AppCompatActivity {
     StorageReference storageReference;
     StorageReference imageReference;
     ImageView avatarView, btnBack;
-    TextView fullNameView, roleView;
+    TextView fullNameView, roleView, balanceView;
     Button btnSetting, btnBalance;
 
     @Override
@@ -71,6 +71,7 @@ public class CartScreen extends AppCompatActivity {
         btnBack = findViewById(R.id.cart_btnBack);
         btnSetting = findViewById(R.id.cart_btnSetting);
         btnBalance = findViewById(R.id.cart_btnBalance);
+        balanceView = findViewById(R.id.cart_balanceView);
 
         setOnClick();
 
@@ -141,6 +142,7 @@ public class CartScreen extends AppCompatActivity {
                                 });
                                 fullNameView.setText(user.getFirstName() + " " + user.getLastName());
                                 roleView.setText(user.getRole());
+                                balanceView.setText("$"+user.getBalance());
                             }
                         }
                     }

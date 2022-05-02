@@ -27,7 +27,7 @@ import java.util.UUID;
 public class UploadScreen extends AppCompatActivity {
 
     private Button btnChoose, btnUpload;
-    private ImageView imageChosen;
+    private ImageView imageChosen, btnBack;
     private Uri filePath;
     private final int PICK_IMAGE_REQUEST = 71;
 
@@ -45,7 +45,15 @@ public class UploadScreen extends AppCompatActivity {
         imageChosen= findViewById(R.id.up_imageChosen);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        btnBack = findViewById(R.id.up_btnBack);
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UploadScreen.this, ProfieScreen.class);
+                startActivity(intent);
+            }
+        });
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

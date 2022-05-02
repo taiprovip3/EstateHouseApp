@@ -52,7 +52,7 @@ public class SellerScreen extends AppCompatActivity {
     TextView btnChooseImage;
     private Uri filePath;
     private final int PICK_IMAGE_REQUEST = 71;
-    String randomImageSelectedNameGenerated = "";
+    String randomImageSelectedNameGenerated = "house_description_1.png";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
