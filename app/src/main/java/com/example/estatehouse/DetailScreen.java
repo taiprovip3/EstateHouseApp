@@ -80,7 +80,7 @@ public class DetailScreen extends AppCompatActivity {
                             Toast.makeText(DetailScreen.this, "FAILED TO GET IMAGE", Toast.LENGTH_LONG).show();
                         }
                     });
-            priceHouseView.setText(""+priceHouse);
+            priceHouseView.setText("$"+priceHouse);
             addressHouseView.setText(addressHouse);
             bedroomNumberView.setText(""+bedroomHouse);
             bathroomNumberView.setText(""+bathroomHouse);

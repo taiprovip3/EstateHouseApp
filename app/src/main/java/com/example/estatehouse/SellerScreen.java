@@ -125,7 +125,7 @@ public class SellerScreen extends AppCompatActivity {
                     data.put("bathrooms", bathroom);
                     data.put("livingarea", livingArea);
                     data.put("image", randomImageSelectedNameGenerated);
-                    data.put("description", "This is the beautifull place to take a braek with your family daily off!");
+                    data.put("description", description);
                     data.put("seller", seller);
                     data.put("documentId", "");
                     houseRef.add(data)
