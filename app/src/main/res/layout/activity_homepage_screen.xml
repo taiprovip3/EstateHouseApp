@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="#FAFAFA"
+    tools:context=".HomepageScreen">
+
+    <TextView
+        android:id="@+id/hp_txtViewSeller"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Seller"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/hp_txtViewLanguage"
+        app:layout_constraintTop_toBottomOf="@+id/hp_sellerIcon" />
+
+    <Spinner
+        android:id="@+id/spinner_cities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinner_countries"
+        app:layout_constraintTop_toBottomOf="@+id/hp_txtViewTitle" />
+
+    <ImageView
+        android:id="@+id/hp_helpIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/hp_txtViewHelp"
+        app:layout_constraintStart_toStartOf="@+id/hp_txtViewHelp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/image_35" />
+
+    <TextView
+        android:id="@+id/hp_txtViewHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Help"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hp_helpIcon" />
+
+    <ImageView
+        android:id="@+id/hp_languageIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/hp_txtViewLanguage"
+        app:layout_constraintStart_toStartOf="@+id/hp_txtViewLanguage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/image_34" />
+
+    <TextView
+        android:id="@+id/hp_txtViewLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Language"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/hp_txtViewHelp"
+        app:layout_constraintTop_toBottomOf="@+id/hp_languageIcon" />
+
+    <ImageView
+        android:id="@+id/hp_loginIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/hp_txtViewLogin"
+        app:layout_constraintStart_toStartOf="@+id/hp_txtViewLogin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/image_33" />
+
+    <TextView
+        android:id="@+id/hp_txtViewLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="Login"
+        android:textAlignment="textEnd"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hp_loginIcon" />
+
+    <TextView
+        android:id="@+id/hp_txtViewTitle"
+        android:layout_width="166dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="Find Your Best House"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hp_txtViewLogin" />
+
+    <TextView
+        android:id="@+id/hp_txtViewLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Location"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hp_txtViewTitle" />
+
+    <Spinner
+        android:id="@+id/spinner_countries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@+id/hp_txtViewLocation"
+        app:layout_constraintTop_toBottomOf="@+id/hp_txtViewTitle" />
+
+    <TextView
+        android:id="@+id/hp_txtViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Type"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_countries" />
+
+    <RadioGroup
+        android:id="@+id/rdGroupType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@+id/hp_txtViewType"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_cities">
+
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/radioButtonBuy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buy" />
+
+        <RadioButton
+            android:id="@+id/radioButtonRent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rent" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/hp_btnFilter"
+        android:layout_width="92dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="4dp"
+        android:background="#E91E63"
+        android:text="Filter"
+        app:iconPadding="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_cities" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="#F4EBEB"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/hp_profileIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/hp_txtViewProfile"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:srcCompat="@drawable/image_46" />
+
+    <ImageView
+        android:id="@+id/hp_notiIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/hp_txtViewNoti"
+        app:layout_constraintEnd_toStartOf="@+id/hp_txtViewProfile"
+        app:layout_constraintHorizontal_bias="0.443"
+        app:layout_constraintStart_toEndOf="@+id/hp_txtViewHomepage"
+        app:srcCompat="@drawable/image_45" />
+
+    <ImageView
+        android:id="@+id/hp_homePageIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/hp_txtViewHomepage"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:srcCompat="@drawable/image_47" />
+
+    <TextView
+        android:id="@+id/hp_txtViewHomepage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="Homepage"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/hp_txtViewNoti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notifications"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hp_txtViewProfile"
+        app:layout_constraintHorizontal_bias="0.431"
+        app:layout_constraintStart_toEndOf="@+id/hp_txtViewHomepage" />
+
+    <TextView
+        android:id="@+id/hp_txtViewProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:text="Profile"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/view" />
+
+    <ListView
+        android:id="@+id/cart_listView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hp_txtViewRecommend" />
+
+    <TextView
+        android:id="@+id/hp_txtViewRecommend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:text="Recommended for new:"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rdGroupType" />
+
+    <ImageView
+        android:id="@+id/hp_sellerIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/hp_txtViewSeller"
+        app:layout_constraintStart_toStartOf="@+id/hp_txtViewSeller"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/image_52" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

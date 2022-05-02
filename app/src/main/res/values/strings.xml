@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">EstateHouse</string>
+    <string-array name="countries">
+        <item>Select country</item>
+        <item>COLOMBIA</item>
+        <item>DOMINICA</item>
+        <item>MARTINIQUE</item>
+        <item>MEXICO</item>
+        <item>MONTSERRAT</item>
+        <item>VENEZUELA</item>
+    </string-array>
+    <string-array name="cities">
+        <item>Select city</item>
+        <item>NEWYORK</item>
+        <item>LOSANGELES</item>
+        <item>CHICAGO</item>
+        <item>HOUSTON</item>
+        <item>PHOENIX</item>
+        <item>DALLAS</item>
+    </string-array>
+    <string-array name="locations">
+        <item>US</item>
+        <item>VN</item>
+    </string-array>
+</resources>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterScreen"
+    android:background="@drawable/gradient_background">
+
+    <TextView
+        android:id="@+id/hp_txtViewHelp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:shadowColor="@color/black"
+        android:shadowDx="5"
+        android:shadowDy="2"
+        android:shadowRadius="5"
+        android:text="CREATE NEW ACCOUNT"
+        android:textColor="#FA5A5A"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textColorHint="#57000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/hp_txtViewHelp"
+        app:layout_constraintStart_toStartOf="@+id/hp_txtViewHelp"
+        app:layout_constraintTop_toBottomOf="@+id/hp_txtViewHelp" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/btn_background"
+        android:text="register"
+        android:textSize="20sp"
+        app:backgroundTint="#FA5A5A"
+        app:layout_constraintEnd_toEndOf="@+id/txtRePassword"
+        app:layout_constraintStart_toStartOf="@+id/txtRePassword"
+        app:layout_constraintTop_toBottomOf="@+id/txtRePassword" />
+
+    <TextView
+        android:id="@+id/hp_txtViewLanguage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Already have an account?"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/txtRePassword"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
+
+    <TextView
+        android:id="@+id/hp_txtViewLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Login here"
+        android:textColor="#FA5A5A"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/hp_txtViewLanguage"
+        app:layout_constraintStart_toEndOf="@+id/hp_txtViewLanguage"
+        app:layout_constraintTop_toTopOf="@+id/hp_txtViewLanguage" />
+
+    <ImageView
+        android:id="@+id/hp_helpIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="@+id/hp_txtViewLanguage"
+        app:layout_constraintTop_toBottomOf="@+id/hp_txtViewLanguage"
+        app:srcCompat="@drawable/img1" />
+
+    <ImageView
+        android:id="@+id/hp_languageIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hp_loginIcon"
+        app:layout_constraintStart_toEndOf="@+id/hp_helpIcon"
+        app:layout_constraintTop_toTopOf="@+id/hp_helpIcon"
+        app:srcCompat="@drawable/image_4" />
+
+    <ImageView
+        android:id="@+id/hp_loginIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/hp_helpIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/hp_helpIcon"
+        app:srcCompat="@drawable/image_2" />
+
+    <EditText
+        android:id="@+id/txtPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Enter password"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        android:textColorHint="#57000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtEmail"
+        app:layout_constraintStart_toStartOf="@+id/txtEmail"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+
+    <EditText
+        android:id="@+id/txtRePassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Re-enter password"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        android:textColorHint="#57000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtPassword"
+        app:layout_constraintStart_toStartOf="@+id/txtPassword"
+        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "72798855132",
+    "project_id": "estatehouse-4ee84",
+    "storage_bucket": "estatehouse-4ee84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72798855132:android:ca8fd5243e7dea9d47f919",
+        "android_client_info": {
+          "package_name": "com.example.estatehouse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "72798855132-ipcnrm2hqe67v1v8sce6psir4bl27unh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjRZOuHOAvppT07SMvb4StndJeZ2eODkM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "72798855132-ipcnrm2hqe67v1v8sce6psir4bl27unh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
