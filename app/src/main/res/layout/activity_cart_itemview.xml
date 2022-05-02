@@ -114,7 +114,7 @@
         app:srcCompat="@drawable/image_49" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txt_m2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#2196F3"

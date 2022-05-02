@@ -7,27 +7,18 @@
     android:background="#E1C6C6"
     tools:context=".NoticeScreen">
 
-    <ImageView
-        android:id="@+id/btn_img"
-        android:layout_width="0dp"
-        android:layout_height="97dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/image_57" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="28dp"
         android:text="Notice"
         android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView18"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -37,6 +28,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="44dp"
         android:layout_marginEnd="16dp"
+        android:drawableLeft="@drawable/image_2"
         android:text="*Các căn nhà đang được giảm giá đến mua ngay ?"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -46,13 +38,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txt_m2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="16dp"
-        android:text="*Lưu ý đăng nhập trước khi mua nhà"
+        android:drawableLeft="@drawable/image_2"
+        android:text="*Bạn nhận được vocher giảm giá khi mua căn nhà >$5000"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,45 +54,80 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_m1" />
 
     <TextView
-        android:id="@+id/txt_nhap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="28dp"
-        android:text="Đăng Nhập"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/txt_tao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="84dp"
-        android:text="Tạo tài khoản"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_nhap"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_nhap"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
         android:id="@+id/txt_hotro"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:drawableLeft="@drawable/image_21"
         android:text="*Bạn có thắc mắt gì vui lòng đến trang help để được hỗ trợ về sản phẩm"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_nhap" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_m2" />
+
+    <ImageView
+        android:id="@+id/btn_home"
+        android:layout_width="0dp"
+        android:layout_height="85dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/grouphomepage" />
+
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/images" />
+
+    <TextView
+        android:id="@+id/txt_m3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/image_2"
+        android:text="Giảm 20% tiền mua 1 căn nhà áp dụng từ 8/5-10/5/2022 khi mua nhà"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/txt_hotro"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_hotro"
+        app:layout_constraintTop_toBottomOf="@+id/txt_hotro" />
+
+    <TextView
+        android:id="@+id/txt_m4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:drawableLeft="@drawable/image_2"
+        android:text="Nhân dịp 30/4,1/5 được giảm giá 10% khi mua các căn nhà"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/txt_m3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_m3"
+        app:layout_constraintTop_toBottomOf="@+id/txt_m3" />
+
+    <TextView
+        android:id="@+id/txt_m5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:drawableLeft="@drawable/image_2"
+        android:text="Tặng $100 khi thanh toán các khoản trên của hàng"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/txt_m4"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_m4"
+        app:layout_constraintTop_toBottomOf="@+id/txt_m4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
