@@ -14,13 +14,17 @@ import android.widget.Toast;
 
 import com.example.estatehouse.entity.House;
 import com.example.estatehouse.entity.HouseCart;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -28,6 +32,8 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import vn.thanguit.toastperfect.ToastPerfect;
 
 public class DetailScreen extends AppCompatActivity {
 
@@ -40,7 +46,7 @@ public class DetailScreen extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private CollectionReference cartReference;
+    private CollectionReference cartReference, userReference;
     String imageHouse, addressHouse, documentIdHouse, descriptionHouse, sellerHouse;
     double priceHouse;
     int bedroomHouse, bathroomHouse, livingareaHouse;
@@ -112,6 +118,34 @@ public class DetailScreen extends AppCompatActivity {
                 Toast.makeText(DetailScreen.this, "Added to your cart success!", Toast.LENGTH_LONG).show();
             }
         });
+        btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userReference.whereEqualTo("email", currentUser.getEmail())
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    double balanceUser = 0.0;
+                                    String documentId = "";
+                                    for(QueryDocumentSnapshot document : task.getResult()){
+                                        balanceUser = document.getDouble("balance");
+                                        documentId = document.getId();
+                                    }
+                                    if(balanceUser < priceHouse){
+                                        ToastPerfect.makeText(DetailScreen.this, ToastPerfect.ERROR, "You don't have enough $ to purchase", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
+                                    } else{
+                                        userReference.document(documentId)
+                                                .update("balance", balanceUser - priceHouse);
+                                        ToastPerfect.makeText(DetailScreen.this, ToastPerfect.SUCCESS, "You purchased success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
+                                    }
+                                }
+                            }
+                        });
+
+            }
+        });
     }
 
     private void anhXa() {
@@ -119,6 +153,7 @@ public class DetailScreen extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
         cartReference = db.collection("carts");
+        userReference = db.collection("users");
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReferenceFromUrl("gs://estatehouse-4ee84.appspot.com");
         imageHouseView = findViewById(R.id.dt_imageView);
