@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/EstateHouseApp/app/src/main/res/layout/activity_balance_screen.xml" value="0.2" />
         <entry key="..\:/EstateHouseApp/app/src/main/res/layout/activity_notice_screen.xml" value="0.22" />
+        <entry key="..\:/EstateHouseApp/app/src/main/res/layout/activity_profie_screen.xml" value="0.16944444444444445" />
       </map>
     </option>
   </component>

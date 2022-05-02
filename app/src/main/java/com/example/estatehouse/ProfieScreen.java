@@ -43,7 +43,7 @@ public class ProfieScreen extends AppCompatActivity {
     private TextView fullNameView, roleView, btnUpdateProfile;
     private EditText edEmail, edFirstName, edLastName, edPhoneNumber, edPassword;
     private Spinner spinnerLocation;
-    private Button btnBack, btnYourCart;
+    private Button btnBack, btnYourCart, btnBalance;
     private ArrayAdapter<CharSequence> adapterLocation;
 
     private User user;
@@ -83,6 +83,13 @@ public class ProfieScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProfieScreen.this, UploadScreen.class);
+                startActivity(intent);
+            }
+        });
+        btnBalance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(ProfieScreen.this, BalanceScreen.class);
                 startActivity(intent);
             }
         });
@@ -167,5 +174,6 @@ public class ProfieScreen extends AppCompatActivity {
         btnBack = findViewById(R.id.pr_btnBack);
         btnUpdateProfile = findViewById(R.id.pr_updateProfile);
         btnYourCart = findViewById(R.id.pr_btnYourCart);
+        btnBalance=findViewById(R.id.btnBalance);
     }
 }
