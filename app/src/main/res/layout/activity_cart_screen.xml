@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".CartScreen">
 
-    <ImageView
-        android:id="@+id/imageView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/image_5" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        app:layout_constraintStart_toEndOf="@+id/imageView17"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textView29"
         android:layout_width="wrap_content"
@@ -30,12 +14,14 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="165dp"
         android:text="YOUR CARTS"
+        android:textColor="#673AB7"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView18"
+        android:id="@+id/cart_avatarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="163dp"
@@ -47,7 +33,7 @@
         app:srcCompat="@drawable/image_6" />
 
     <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/cart_fullNameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="165dp"
@@ -56,10 +42,10 @@
         android:text="Phan Tan Tai"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView18" />
+        app:layout_constraintTop_toBottomOf="@+id/cart_avatarView" />
 
     <TextView
-        android:id="@+id/textView31"
+        android:id="@+id/cart_roleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="176dp"
@@ -67,7 +53,7 @@
         android:text="Member"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintTop_toBottomOf="@+id/cart_fullNameView" />
 
     <View
         android:id="@+id/view3"
@@ -80,10 +66,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView31" />
+        app:layout_constraintTop_toBottomOf="@+id/cart_roleView" />
 
     <Button
-        android:enabled="false"
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -91,14 +76,16 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="#A174F1"
+        android:enabled="false"
         android:text="YOUR CART"
         app:layout_constraintBottom_toBottomOf="@+id/view3"
-        app:layout_constraintEnd_toStartOf="@+id/button6"
-        app:layout_constraintStart_toEndOf="@+id/button4"
+        app:layout_constraintEnd_toStartOf="@+id/cart_btnSetting"
+        app:layout_constraintStart_toEndOf="@+id/cart_btnBalance"
         app:layout_constraintTop_toTopOf="@+id/view3" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/cart_btnBalance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -110,7 +97,7 @@
         app:layout_constraintTop_toTopOf="@+id/view3" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/cart_btnSetting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -129,4 +116,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+    <ImageView
+        android:id="@+id/cart_btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/image_14" />
 </androidx.constraintlayout.widget.ConstraintLayout>
