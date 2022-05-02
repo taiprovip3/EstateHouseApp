@@ -93,7 +93,6 @@ public class HomepageAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, h.toString(), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(context, DetailScreen.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("imageHouse", h.getImage());

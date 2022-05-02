@@ -76,7 +76,7 @@ public class SellerScreen extends AppCompatActivity {
         edBedroom = findViewById(R.id.sll_edBedroom);
         edBathroom = findViewById(R.id.sll_edBathroom);
         edLivingArea = findViewById(R.id.sll_edLivingArea);
-        homePage = findViewById(R.id.sll_homePageIcon);
+        homePage = findViewById(R.id.sll_btnBack);
         imageChosen = findViewById(R.id.sll_imageChosen);
 
         //setOnClickListenter

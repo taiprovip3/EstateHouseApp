@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#7DDDDD"
+    android:backgroundTintMode="add"
     tools:context=".SellerScreen">
 
     <EditText
@@ -158,7 +160,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Rent or buy"
+        android:hint="'RENT' or 'BUY'"
         android:inputType="textPersonName"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -269,7 +271,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Don't use multi tag"
+        android:hint="Don't use multi tag, just one"
         android:inputType="textPersonName"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -296,26 +298,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/view5"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/textView60"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Homepage"
-        android:textColor="#000000"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sll_homePageIcon" />
-
-    <ImageView
-        android:id="@+id/sll_homePageIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView60"
-        app:layout_constraintStart_toStartOf="@+id/textView60"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/image_47" />
-
     <ImageView
         android:id="@+id/sll_imageChosen"
         android:layout_width="0dp"
@@ -327,5 +309,15 @@
         app:layout_constraintStart_toEndOf="@+id/sll_btnChooseImage"
         app:layout_constraintTop_toBottomOf="@+id/pr_updateProfile"
         app:srcCompat="@drawable/can_ho_nha_mat_dat_1_1" />
+
+    <ImageView
+        android:id="@+id/sll_btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/image_14" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

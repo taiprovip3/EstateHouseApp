@@ -31,7 +31,7 @@ import java.util.UUID;
 
 public class DetailScreen extends AppCompatActivity {
 
-    private ImageView imageHouseView;
+    private ImageView imageHouseView, btnBack;
     private TextView priceHouseView, addressHouseView, bedroomNumberView, bathroomNumberView, livingareView, sellerView, descriptionView;
     private Button btnBuy, btnAddToCart;
     private FirebaseStorage storage;
@@ -88,6 +88,13 @@ public class DetailScreen extends AppCompatActivity {
             descriptionView.setText(descriptionHouse);
             sellerView.setText(sellerHouse);
         }
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailScreen.this, HomepageScreen.class);
+                startActivity(intent);
+            }
+        });
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,5 +131,6 @@ public class DetailScreen extends AppCompatActivity {
         livingareView = findViewById(R.id.dt_livingareView);
         sellerView = findViewById(R.id.dt_sellerView);
         descriptionView = findViewById(R.id.dt_descriptionView);
+        btnBack = findViewById(R.id.dt_btnBack);
     }
 }
