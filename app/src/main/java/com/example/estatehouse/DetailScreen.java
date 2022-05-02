@@ -77,7 +77,7 @@ public class DetailScreen extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(DetailScreen.this, "FAILED TO GET IMAGE", Toast.LENGTH_LONG).show();
+                            Toast.makeText(DetailScreen.this, "FAILED TO GET IMG", Toast.LENGTH_LONG).show();
                         }
                     });
             priceHouseView.setText("$"+priceHouse);
