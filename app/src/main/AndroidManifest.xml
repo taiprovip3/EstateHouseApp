@@ -109,7 +109,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProfieScreen"
+            android:name=".ProfileScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

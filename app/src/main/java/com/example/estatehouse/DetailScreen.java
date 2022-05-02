@@ -64,6 +64,7 @@ public class DetailScreen extends AppCompatActivity {
         setContentView(R.layout.activity_detail_screen);
 
         anhXa();
+        onClick();
         
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -104,6 +105,27 @@ public class DetailScreen extends AppCompatActivity {
             sellerView.setText(sellerHouse);
             typeView.setText(typeHouse);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        userReference.whereEqualTo("email", currentUser.getEmail())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot document: task.getResult()){
+                                user = document.toObject(User.class);
+                                balanceView.setText("$" + user.getBalance());
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void onClick() {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,24 +180,6 @@ public class DetailScreen extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        userReference.whereEqualTo("email", currentUser.getEmail())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            for (QueryDocumentSnapshot document: task.getResult()){
-                                user = document.toObject(User.class);
-                                balanceView.setText("$" + user.getBalance());
-                            }
-                        }
-                    }
-                });
-    }//end onStart
 
     private void anhXa() {
         mAuth = FirebaseAuth.getInstance();

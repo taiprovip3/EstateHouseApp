@@ -29,7 +29,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-public class ProfieScreen extends AppCompatActivity {
+import vn.thanguit.toastperfect.ToastPerfect;
+
+public class ProfileScreen extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -54,45 +56,7 @@ public class ProfieScreen extends AppCompatActivity {
         setContentView(R.layout.activity_profie_screen);
 
         anhXa();
-
-        adapterLocation = ArrayAdapter.createFromResource(this, R.array.locations, android.R.layout.simple_spinner_item);
-        adapterLocation.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinnerLocation.setAdapter(adapterLocation);
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProfieScreen.this, HomepageScreen.class);
-                startActivity(intent);
-            }
-        });
-        btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateProfile();
-            }
-        });
-        btnYourCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProfieScreen.this, CartScreen.class);
-                startActivity(intent);
-            }
-        });
-        uploadView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProfieScreen.this, UploadScreen.class);
-                startActivity(intent);
-            }
-        });
-        btnBalance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(ProfieScreen.this, BalanceScreen.class);
-                startActivity(intent);
-            }
-        });
+        onClick();
     }
 
     @Override
@@ -128,7 +92,7 @@ public class ProfieScreen extends AppCompatActivity {
                                     edPassword.setText(user.getPassword());
                                 }
                             } else
-                                Toast.makeText(ProfieScreen.this, "GET DOCUMENT FAILED", Toast.LENGTH_LONG).show();
+                            ToastPerfect.makeText(ProfileScreen.this, ToastPerfect.ERROR, "ERROR, get document failed", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -141,7 +105,7 @@ public class ProfieScreen extends AppCompatActivity {
         user.setPhonenumber(edPhoneNumber.getText().toString());
         user.setPassword(edPassword.getText().toString());
         userReference.document(user.getDocumentId()).set(user);
-        Toast.makeText(this, "Update profile success", Toast.LENGTH_LONG).show();
+        ToastPerfect.makeText(ProfileScreen.this, ToastPerfect.SUCCESS, "Update profile success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
         finish();
         startActivity(getIntent());
     }
@@ -175,5 +139,46 @@ public class ProfieScreen extends AppCompatActivity {
         btnUpdateProfile = findViewById(R.id.pr_updateProfile);
         btnYourCart = findViewById(R.id.pr_btnYourCart);
         btnBalance=findViewById(R.id.btnBalance);
+
+        adapterLocation = ArrayAdapter.createFromResource(this, R.array.locations, android.R.layout.simple_spinner_item);
+        adapterLocation.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinnerLocation.setAdapter(adapterLocation);
+    }
+
+    private void onClick() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileScreen.this, HomepageScreen.class);
+                startActivity(intent);
+            }
+        });
+        btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateProfile();
+            }
+        });
+        btnYourCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileScreen.this, CartScreen.class);
+                startActivity(intent);
+            }
+        });
+        uploadView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileScreen.this, UploadScreen.class);
+                startActivity(intent);
+            }
+        });
+        btnBalance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(ProfileScreen.this, BalanceScreen.class);
+                startActivity(intent);
+            }
+        });
     }
 }

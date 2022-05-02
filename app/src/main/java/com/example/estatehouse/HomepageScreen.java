@@ -8,9 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,7 +17,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.estatehouse.adapter.HomepageAdapter;
 import com.example.estatehouse.entity.House;
@@ -36,19 +32,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import vn.thanguit.toastperfect.ToastPerfect;
+
 public class HomepageScreen extends AppCompatActivity {
 
-    FirebaseFirestore db;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
+    FirebaseFirestore db;
     CollectionReference houseRef;
     Spinner spinnerCountries, spinnerCities;
     RadioGroup rdGroupType;
@@ -68,23 +64,93 @@ public class HomepageScreen extends AppCompatActivity {
     List<TextView> arrayTextViewComponent;
     String [] componentVNTranslate;
     String [] componentUSTranslate;
+    ArrayAdapter<CharSequence> adapterCountry, adapterCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage_screen);
 
-        //Ánh xạ
         anhXa();
+        onClick();
 
-        ArrayAdapter<CharSequence> adapterCountry = ArrayAdapter.createFromResource(this, R.array.countries, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> adapterCity = ArrayAdapter.createFromResource(this, R.array.cities, android.R.layout.simple_spinner_item);
-        adapterCountry.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinnerCountries.setAdapter(adapterCountry);
-        spinnerCities.setAdapter(adapterCity);
+        //Get recommended for new
+        houses = new ArrayList<House>();
+        houseRef.whereArrayContains("tags", "NEW")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                House house = documentSnapshot.toObject(House.class);
+                                house.setDocumentId(documentSnapshot.getId());
+                                houses.add(house);
+                            }
+                            homepageAdapter = new HomepageAdapter(houses, HomepageScreen.this);
+                            listView.setAdapter(homepageAdapter);
+                        } else
+                            ToastPerfect.makeText(HomepageScreen.this, ToastPerfect.ERROR, "ERROR, " + task.getException(), ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                    }
+                });
 
-        //setOnClick
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(isLogged()){
+            txtViewlogin.setText("Logout");
+            txtViewlogin.getPaint().setUnderlineText(true);
+            txtViewlogin.setTextColor(Color.BLUE);
+
+        } else{
+            txtViewlogin.setText("Login");
+            txtViewlogin.getPaint().setUnderlineText(false);
+            txtViewlogin.setTextColor(Color.BLACK);
+        }
+    }
+
+    private boolean isLogged() {
+        currentUser = mAuth.getCurrentUser();
+        if(currentUser == null)
+            return false;
+        return true;
+    }
+
+    private void onClick() {
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String countrySelected = spinnerCountries.getSelectedItem().toString();
+                String citySelected = spinnerCities.getSelectedItem().toString();
+                String typeSelected = "";
+                if(typeSelectedDefault == 0)
+                    typeSelected = "BUY";
+                else
+                    typeSelected = "RENT";
+                if(!countrySelected.equalsIgnoreCase("Select country") || !citySelected.equalsIgnoreCase("Select city")){
+                    ToastPerfect.makeText(HomepageScreen.this, ToastPerfect.INFORMATION, "Searching...", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                    houseRef.whereArrayContainsAny("tags", Arrays.asList(countrySelected, citySelected))
+                            .whereEqualTo("type", typeSelected)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful()){
+                                        houses.clear();
+                                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                            House house = documentSnapshot.toObject(House.class);
+                                            houses.add(house);
+                                        }
+                                        homepageAdapter = new HomepageAdapter(houses, HomepageScreen.this);
+                                        listView.setAdapter(homepageAdapter);
+                                    } else ToastPerfect.makeText(HomepageScreen.this, ToastPerfect.ERROR, "ERROR, "+ task.getException(), ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+            }
+        });
         helpView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,14 +183,14 @@ public class HomepageScreen extends AppCompatActivity {
                             btnFilter.setText("Tìm kiếm");
                             rdBuy.setText("MUA");
                             rdRent.setText("THUÊ");
-                            Toast.makeText(HomepageScreen.this, "Ngôn ngữ của bạn đã được thay đổi thành :: " + languageSelected, Toast.LENGTH_LONG).show();
+                            ToastPerfect.makeText(HomepageScreen.this, ToastPerfect.SUCCESS, "Ngôn ngữ của bạn đã được thay đổi thành :: " + languageSelected, ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                         } else{
                             for (int k = 0; k < componentVNTranslate.length; k++)
                                 arrayTextViewComponent.get(k).setText(componentUSTranslate[k]);
                             btnFilter.setText("Filter");
                             rdBuy.setText("BUY");
                             rdRent.setText("RENT");
-                            Toast.makeText(HomepageScreen.this, "Your language have been changed to :: " + languageSelected, Toast.LENGTH_LONG).show();
+                            ToastPerfect.makeText(HomepageScreen.this, ToastPerfect.SUCCESS, "Your language have been changed to :: " + languageSelected, ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -161,14 +227,14 @@ public class HomepageScreen extends AppCompatActivity {
                     mAuth.signOut();
                     Intent intent = new Intent(HomepageScreen.this, LoginScreen.class);
                     startActivity(intent);
-                    Toast.makeText(HomepageScreen.this, "Logout success", Toast.LENGTH_LONG).show();
+                    ToastPerfect.makeText(HomepageScreen.this, ToastPerfect.SUCCESS, "Logout success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                 }
             }
         });
         homePageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomepageScreen.this, "You're here now!", Toast.LENGTH_LONG).show();
+                ToastPerfect.makeText(HomepageScreen.this, ToastPerfect.WARNING, "You're here now!", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
             }
         });
         notiView.setOnClickListener(new View.OnClickListener() {
@@ -182,7 +248,7 @@ public class HomepageScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(isLogged()){
-                    Intent intent = new Intent(HomepageScreen.this, ProfieScreen.class);
+                    Intent intent = new Intent(HomepageScreen.this, ProfileScreen.class);
                     startActivity(intent);
                 } else{
                     Intent intent = new Intent(HomepageScreen.this, LoginScreen.class);
@@ -203,82 +269,6 @@ public class HomepageScreen extends AppCompatActivity {
                 }
             }
         });
-        btnFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String countrySelected = spinnerCountries.getSelectedItem().toString();
-                String citySelected = spinnerCities.getSelectedItem().toString();
-                String typeSelected = "";
-                if(typeSelectedDefault == 0)
-                    typeSelected = "BUY";
-                else
-                    typeSelected = "RENT";
-                if(!countrySelected.equalsIgnoreCase("Select country") && !citySelected.equalsIgnoreCase("Select city")){
-                    Toast.makeText(HomepageScreen.this, "Querying...", Toast.LENGTH_LONG).show();
-                    houseRef.whereArrayContainsAny("tags", Arrays.asList(countrySelected, citySelected))
-                            .whereEqualTo("type", typeSelected)
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if(task.isSuccessful()){
-                                        houses.clear();
-                                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                            House house = documentSnapshot.toObject(House.class);
-                                            houses.add(house);
-                                            Log.d("FILTERRED", house.toString());
-                                        }
-                                        homepageAdapter = new HomepageAdapter(houses, HomepageScreen.this);
-                                        listView.setAdapter(homepageAdapter);
-                                    } else Log.w("ERROR-FIRE", "Error getting documents.", task.getException());
-                                }
-                            });
-                }//end if
-            }
-        });
-
-        //Get recommended for new
-        houses = new ArrayList<House>();
-        houseRef.whereArrayContains("tags", "NEW")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                House house = documentSnapshot.toObject(House.class);
-                                house.setDocumentId(documentSnapshot.getId());
-                                houses.add(house);
-                            }
-                            homepageAdapter = new HomepageAdapter(houses, HomepageScreen.this);
-                            listView.setAdapter(homepageAdapter);
-                        } else
-                            Log.w("ERROR-FIRE", "Error getting documents.", task.getException());
-                    }
-                });
-
-    }//end onCreate
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if(isLogged()){
-            txtViewlogin.setText("Logout");
-            txtViewlogin.getPaint().setUnderlineText(true);
-            txtViewlogin.setTextColor(Color.BLUE);
-
-        } else{
-            txtViewlogin.setText("Login");
-            txtViewlogin.getPaint().setUnderlineText(false);
-            txtViewlogin.setTextColor(Color.BLACK);
-        }
-    }//end onStart
-
-    private boolean isLogged() {
-        currentUser = mAuth.getCurrentUser();
-        if(currentUser == null)
-            return false;
-        return true;
     }
 
     private void anhXa() {
@@ -317,6 +307,12 @@ public class HomepageScreen extends AppCompatActivity {
         for (int k = 0; k < componentTextView.length; k++) {
             arrayTextViewComponent.add(componentTextView[k]);
         }
+        adapterCountry = ArrayAdapter.createFromResource(this, R.array.countries, android.R.layout.simple_spinner_item);
+        adapterCity = ArrayAdapter.createFromResource(this, R.array.cities, android.R.layout.simple_spinner_item);
+        adapterCountry.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinnerCountries.setAdapter(adapterCountry);
+        spinnerCities.setAdapter(adapterCity);
     }
 
 
@@ -329,15 +325,13 @@ public class HomepageScreen extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d("SUCCESS FIRESTORE", "DocumentSnapshot added with ID: " + documentReference.getId());
-                        Toast.makeText(HomepageScreen.this, "DocumentSnapshot added with ID: " + documentReference.getId(), Toast.LENGTH_LONG).show();
+                        ToastPerfect.makeText(HomepageScreen.this, ToastPerfect.SUCCESS, "DocumentSnapshot added with ID: " + documentReference.getId(), ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("FAILED FIRESTORE", "Error adding document", e);
-                        Toast.makeText(HomepageScreen.this, "Error adding document" + e, Toast.LENGTH_LONG).show();
+                        ToastPerfect.makeText(HomepageScreen.this, ToastPerfect.ERROR, "ERROR, " + e, ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     }
                 });
     }

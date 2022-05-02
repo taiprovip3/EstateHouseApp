@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +26,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import vn.thanguit.toastperfect.ToastPerfect;
+
 public class BalanceScreen extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -36,43 +37,59 @@ public class BalanceScreen extends AppCompatActivity {
     private StorageReference imageReference;
     private FirebaseFirestore db;
     private CollectionReference userReference;
-
     private ImageView imgAvatar;
-    private TextView txtName;
-    private TextView txtRole;
-    private TextView txtBalance;
-    private TextView btnBack;
+    private TextView txtName, txtRole, txtBalance, btnBack;
     private Button btnSetting, btnCart;
-
     private User user;
-
     private UserDao userDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balance_screen);
-        mAuth = FirebaseAuth.getInstance();
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReferenceFromUrl("gs://estatehouse-4ee84.appspot.com");
-        db = FirebaseFirestore.getInstance();
-        userReference = db.collection("users");
 
-        user = new User();
-        userDao=new UserDao(this);
+        anhXa();
+        onClick();
+    }
 
-        imgAvatar = findViewById(R.id.imgAvatar);
-        txtName = findViewById(R.id.txtUserName);
-        txtRole = findViewById(R.id.txtRole);
-        txtBalance=findViewById(R.id.txtBalance);
-        btnSetting=findViewById(R.id.bl_goSetting);
-        btnCart = findViewById(R.id.bl_goCart);
-        btnBack = findViewById(R.id.bl_btnBack);
+    @Override
+    public void onStart() {
+        super.onStart();
+        String email = currentUser.getEmail();
+        userReference.whereEqualTo("email", email)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                user = document.toObject(User.class);
+                                user.setDocumentId(document.getId());
+                                imageReference = storageReference.child("images/"+user.getAvatar());
+                                imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Picasso.get()
+                                                .load(uri)
+                                                .into(imgAvatar);
+                                    }
+                                });
+                                txtName.setText(user.getFirstName() + " " + user.getLastName());
+                                txtRole.setText(user.getRole());
+                                txtBalance.setText("$" + String.valueOf(user.getBalance()));
+                                userDao.addUser(user);
+                            }
+                        } else
+                            ToastPerfect.makeText(BalanceScreen.this, ToastPerfect.ERROR, "ERROR, get document failed", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                    }
+                });
+    }
 
+    private void onClick() {
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(BalanceScreen.this, ProfieScreen.class);
+                Intent intent=new Intent(BalanceScreen.this, ProfileScreen.class);
                 startActivity(intent);
             }
         });
@@ -86,51 +103,27 @@ public class BalanceScreen extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(BalanceScreen.this, ProfieScreen.class);
+                Intent intent=new Intent(BalanceScreen.this, ProfileScreen.class);
                 startActivity(intent);
             }
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (isLogged()) {
-            String email = currentUser.getEmail();
-            userReference.whereEqualTo("email", email)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if(task.isSuccessful()){
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    user = document.toObject(User.class);
-                                    user.setDocumentId(document.getId());
-                                    imageReference = storageReference.child("images/"+user.getAvatar());
-                                    imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            Picasso.get()
-                                                    .load(uri)
-                                                    .into(imgAvatar);
-                                        }
-                                    });
-                                    txtName.setText(user.getFirstName() + " " + user.getLastName());
-                                    txtRole.setText(user.getRole());
-                                    txtBalance.setText("$" + String.valueOf(user.getBalance()));
-                                    userDao.addUser(user);
-                                }
-                            } else
-                                Toast.makeText(BalanceScreen.this, "GET DOCUMENT FAILED", Toast.LENGTH_LONG).show();
-                        }
-                    });
-        }
-    }
-
-    private boolean isLogged() {
+    private void anhXa() {
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReferenceFromUrl("gs://estatehouse-4ee84.appspot.com");
+        db = FirebaseFirestore.getInstance();
+        userReference = db.collection("users");
+        mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        if(currentUser == null)
-            return false;
-        return true;
+        user = new User();
+        userDao=new UserDao(this);
+        imgAvatar = findViewById(R.id.imgAvatar);
+        txtName = findViewById(R.id.txtUserName);
+        txtRole = findViewById(R.id.txtRole);
+        txtBalance=findViewById(R.id.txtBalance);
+        btnSetting=findViewById(R.id.bl_goSetting);
+        btnCart = findViewById(R.id.bl_goCart);
+        btnBack = findViewById(R.id.bl_btnBack);
     }
 }

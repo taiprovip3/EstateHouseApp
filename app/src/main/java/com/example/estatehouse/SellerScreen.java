@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import vn.thanguit.toastperfect.ToastPerfect;
+
 public class SellerScreen extends AppCompatActivity {
 
     FirebaseFirestore db;
@@ -53,33 +55,36 @@ public class SellerScreen extends AppCompatActivity {
     private Uri filePath;
     private final int PICK_IMAGE_REQUEST = 71;
     String randomImageSelectedNameGenerated = "house_description_1.png";
+    String documentId = UUID.randomUUID().toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_screen);
 
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-        houseRef = db.collection("houses");
-        btnChooseImage = findViewById(R.id.sll_btnChooseImage);
-        btnReset = findViewById(R.id.sll_btnReset);
-        btnRegister = findViewById(R.id.sll_btnRegister);
-        edType = findViewById(R.id.sll_edType);
-        edPrice = findViewById(R.id.sll_edPrice);
-        edAddress = findViewById(R.id.sll_edAddress);
-        edSale = findViewById(R.id.sll_edSale);
-        edTags = findViewById(R.id.sll_edTags);
-        edDescription = findViewById(R.id.sll_edDescription);
-        edBedroom = findViewById(R.id.sll_edBedroom);
-        edBathroom = findViewById(R.id.sll_edBathroom);
-        edLivingArea = findViewById(R.id.sll_edLivingArea);
-        homePage = findViewById(R.id.sll_btnBack);
-        imageChosen = findViewById(R.id.sll_imageChosen);
+        anhXa();
+        onClick();
+    }
 
-        //setOnClickListenter
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null ) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                imageChosen.setImageBitmap(bitmap);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    //--------------------methods--------------------//
+    private void onClick() {
         btnChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,28 +132,38 @@ public class SellerScreen extends AppCompatActivity {
                     data.put("image", randomImageSelectedNameGenerated);
                     data.put("description", description);
                     data.put("seller", seller);
-                    data.put("documentId", "");
-                    houseRef.add(data)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Toast.makeText(SellerScreen.this, "Register successfully product :: " + documentReference.getId(), Toast.LENGTH_LONG).show();
-                                    uploadImage();
-                                    emptyField();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(SellerScreen.this, "Register product failed. can't put", Toast.LENGTH_LONG).show();
-                                }
-                            });
-                } else Toast.makeText(SellerScreen.this, "Please fill out fields required!", Toast.LENGTH_LONG).show();
+                    data.put("documentId", documentId);
+                    houseRef.document(documentId)
+                            .set(data);
+                    ToastPerfect.makeText(SellerScreen.this, ToastPerfect.SUCCESS, "Register successfully product :: " + documentId, ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                    uploadImage();
+                    emptyField();
+                } else ToastPerfect.makeText(SellerScreen.this, ToastPerfect.ERROR, "Please fill out fields required!", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
             }
         });
-    }//end onCreate
+    }
+    private void anhXa() {
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        houseRef = db.collection("houses");
+        btnChooseImage = findViewById(R.id.sll_btnChooseImage);
+        btnReset = findViewById(R.id.sll_btnReset);
+        btnRegister = findViewById(R.id.sll_btnRegister);
+        edType = findViewById(R.id.sll_edType);
+        edPrice = findViewById(R.id.sll_edPrice);
+        edAddress = findViewById(R.id.sll_edAddress);
+        edSale = findViewById(R.id.sll_edSale);
+        edTags = findViewById(R.id.sll_edTags);
+        edDescription = findViewById(R.id.sll_edDescription);
+        edBedroom = findViewById(R.id.sll_edBedroom);
+        edBathroom = findViewById(R.id.sll_edBathroom);
+        edLivingArea = findViewById(R.id.sll_edLivingArea);
+        homePage = findViewById(R.id.sll_btnBack);
+        imageChosen = findViewById(R.id.sll_imageChosen);
+    }
 
-    //--------------------methods--------------------//
     private void uploadImage() {
         if(filePath != null){
             final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -160,14 +175,14 @@ public class SellerScreen extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                            Toast.makeText(SellerScreen.this, "Uploaded successfully!", Toast.LENGTH_LONG).show();
+                            ToastPerfect.makeText(SellerScreen.this, ToastPerfect.SUCCESS, "Uploaded successfully!", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(SellerScreen.this, "Upload failed: "+e.getMessage(), Toast.LENGTH_LONG).show();
+                            ToastPerfect.makeText(SellerScreen.this, ToastPerfect.ERROR, "Upload failed :: " + e.getMessage(), ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -185,22 +200,6 @@ public class SellerScreen extends AppCompatActivity {
         intent.setType("image/png");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent,"Select Picture"), PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null ) {
-            filePath = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                imageChosen.setImageBitmap(bitmap);
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     private boolean dataIsValid(String type, double price, String address, int sale, List<String> tags, String description, int bedroom, int bathroom, int livingArea) {

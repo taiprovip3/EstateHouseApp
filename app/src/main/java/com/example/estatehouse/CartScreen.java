@@ -6,13 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.estatehouse.adapter.CartAdapter;
 import com.example.estatehouse.entity.HouseCart;
@@ -37,25 +35,50 @@ import vn.thanguit.toastperfect.ToastPerfect;
 
 public class CartScreen extends AppCompatActivity {
 
-    List<HouseCart> houseCarts;
-    ListView listView;
-    CartAdapter cartAdapter;
-    FirebaseFirestore db;
-    CollectionReference cartReference, userReference;
-    FirebaseAuth mAuth;
-    FirebaseUser currentUser;
-    FirebaseStorage storage;
-    StorageReference storageReference;
-    StorageReference imageReference;
-    ImageView avatarView, btnBack;
-    TextView fullNameView, roleView, balanceView;
-    Button btnSetting, btnBalance;
+    private List<HouseCart> houseCarts;
+    private ListView listView;
+    private CartAdapter cartAdapter;
+    private FirebaseFirestore db;
+    private CollectionReference cartReference, userReference;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private StorageReference imageReference;
+    private ImageView avatarView, btnBack;
+    private TextView fullNameView, roleView, balanceView;
+    private Button btnSetting, btnBalance;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_screen);
 
+       anhXa();
+        onClick();
+
+        cartReference
+                .whereEqualTo("email", currentUser.getEmail())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                HouseCart cart = documentSnapshot.toObject(HouseCart.class);
+                                houseCarts.add(cart);
+                            }
+                            cartAdapter = new CartAdapter(houseCarts, CartScreen.this);
+                            listView.setAdapter(cartAdapter);
+                        } else
+                            ToastPerfect.makeText(CartScreen.this, ToastPerfect.ERROR, "ERROR, "+task.getException(), ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void anhXa() {
+        user = new User();
         avatarView = findViewById(R.id.cart_avatarView);
         fullNameView = findViewById(R.id.cart_fullNameView);
         roleView = findViewById(R.id.cart_roleView);
@@ -72,40 +95,20 @@ public class CartScreen extends AppCompatActivity {
         btnSetting = findViewById(R.id.cart_btnSetting);
         btnBalance = findViewById(R.id.cart_btnBalance);
         balanceView = findViewById(R.id.cart_balanceView);
-
-        setOnClick();
-
-        cartReference
-                .whereEqualTo("email", currentUser.getEmail())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                HouseCart cart = documentSnapshot.toObject(HouseCart.class);
-                                houseCarts.add(cart);
-                            }
-                            cartAdapter = new CartAdapter(houseCarts, CartScreen.this);
-                            listView.setAdapter(cartAdapter);
-                        } else
-                            Log.w("ERROR-GET-FIRESTORE", "Error getting documents.", task.getException());
-                    }
-                });
     }
 
-    private void setOnClick() {
+    private void onClick() {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CartScreen.this, ProfieScreen.class);
+                Intent intent = new Intent(CartScreen.this, ProfileScreen.class);
                 startActivity(intent);
             }
         });
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CartScreen.this, ProfieScreen.class);
+                Intent intent = new Intent(CartScreen.this, ProfileScreen.class);
                 startActivity(intent);
             }
         });
@@ -121,17 +124,14 @@ public class CartScreen extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        String email = currentUser.getEmail();
-        userReference.whereEqualTo("email", email)
+        userReference.whereEqualTo("email", currentUser.getEmail())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                User user = new User();
                                 user = document.toObject(User.class);
-                                user.setDocumentId(document.getId());
                                 imageReference = storageReference.child("images/"+user.getAvatar());
                                 imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override

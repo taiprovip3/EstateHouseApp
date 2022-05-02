@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import vn.thanguit.toastperfect.ToastPerfect;
+
 public class LoginScreen extends AppCompatActivity {
     private EditText txtName, txtPass;
     private FirebaseAuth auth;
@@ -27,10 +29,12 @@ public class LoginScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
-        auth=FirebaseAuth.getInstance();
-        txtName=(EditText) findViewById(R.id.txtName);
-        txtPass=(EditText) findViewById(R.id.txtPass);
-        txtRegisterHere=(TextView)findViewById(R.id.txtRegisterHere);
+
+        anhXa();
+        onClick();
+    }
+
+    private void onClick() {
         txtRegisterHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,18 +43,17 @@ public class LoginScreen extends AppCompatActivity {
                 finish();
             }
         });
-        btnLog=(Button) findViewById(R.id.btnLog);
         btnLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email=txtName.getText().toString();
                 String pass=txtPass.getText().toString();
                 if (TextUtils.isEmpty(email)){
-                    Toast.makeText(getApplicationContext(),"Enter user name",Toast.LENGTH_SHORT).show();
+                    ToastPerfect.makeText(LoginScreen.this, ToastPerfect.ERROR, "Please enter username", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(pass)){
-                    Toast.makeText(getApplicationContext(),"Enter password",Toast.LENGTH_SHORT).show();
+                    ToastPerfect.makeText(LoginScreen.this, ToastPerfect.ERROR, "Please enter password", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     return;
                 }
                 auth.signInWithEmailAndPassword(email,pass)
@@ -58,10 +61,11 @@ public class LoginScreen extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (!task.isSuccessful()){
-                                    Toast.makeText(getApplicationContext(),"Login failed",Toast.LENGTH_SHORT).show();
+                                    ToastPerfect.makeText(LoginScreen.this, ToastPerfect.ERROR, "Login failed", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                 }
                                 else {
                                     Toast.makeText(LoginScreen.this, "Login successully, we redirect you to homepage", Toast.LENGTH_LONG).show();
+                                    ToastPerfect.makeText(LoginScreen.this, ToastPerfect.SUCCESS, "Login successully, you were redirected to HomepageScreen.java", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                     Intent intent=new Intent(LoginScreen.this,HomepageScreen.class);
                                     startActivity(intent);
                                     finish();
@@ -70,5 +74,13 @@ public class LoginScreen extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    private void anhXa() {
+        auth = FirebaseAuth.getInstance();
+        txtName=(EditText) findViewById(R.id.txtName);
+        txtPass=(EditText) findViewById(R.id.txtPass);
+        txtRegisterHere=(TextView)findViewById(R.id.txtRegisterHere);
+        btnLog=(Button) findViewById(R.id.btnLog);
     }
 }

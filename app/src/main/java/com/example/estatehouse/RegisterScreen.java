@@ -31,6 +31,8 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import vn.thanguit.toastperfect.ToastPerfect;
+
 public class RegisterScreen extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -49,12 +51,11 @@ public class RegisterScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_screen);
 
-        db = FirebaseFirestore.getInstance();
-        userReference = db.collection("users");
-        txtEmail=(EditText) findViewById(R.id.txtEmail);
-        txtPassword=(EditText) findViewById(R.id.txtPassword);
-        txtRePassword=(EditText) findViewById(R.id.txtRePassword);
-        txtLoginHere=(TextView)findViewById(R.id.hp_txtViewLogin);
+        anhXa();
+        onClick();
+    }
+
+    private void onClick() {
         txtLoginHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,7 +64,6 @@ public class RegisterScreen extends AppCompatActivity {
                 finish();
             }
         });
-        btnRegister=(Button)findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,18 +71,15 @@ public class RegisterScreen extends AppCompatActivity {
                 password=txtPassword.getText().toString();
                 rePassword=txtRePassword.getText().toString();
                 if(email.equals("")){
-                    Toast.makeText(RegisterScreen.this, "Enter email",
-                            Toast.LENGTH_SHORT).show();
+                    ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.ERROR, "Please enter username", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     return;
                 }
                 if(password.equals("")){
-                    Toast.makeText(RegisterScreen.this, "Enter password",
-                            Toast.LENGTH_SHORT).show();
+                    ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.ERROR, "Please enter password", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     return;
                 }
                 if(rePassword.equals("")){
-                    Toast.makeText(RegisterScreen.this, "Enter re-enter password",
-                            Toast.LENGTH_SHORT).show();
+                    ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.ERROR, "Please enter re-enter password", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     return;
                 }
                 if(password.equals(rePassword)){
@@ -106,22 +103,27 @@ public class RegisterScreen extends AppCompatActivity {
                                         userReference
                                                 .document(documentId)
                                                 .set(userObject);
-                                        Toast.makeText(RegisterScreen.this, "Register success",
-                                                Toast.LENGTH_LONG).show();
+                                        ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.SUCCESS, "Register success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                         emptyField();
                                     } else {
-                                        Toast.makeText(RegisterScreen.this, "Register failed",
-                                                Toast.LENGTH_LONG).show();
+                                        ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.ERROR, "Register failed", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 }
-                else{
-                    Toast.makeText(RegisterScreen.this, "Password and Repassword are not the same",
-                            Toast.LENGTH_LONG).show();
-                }
+                else ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.ERROR, "Password and Re-enter password are not the same", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void anhXa() {
+        db = FirebaseFirestore.getInstance();
+        userReference = db.collection("users");
+        txtEmail=(EditText) findViewById(R.id.txtEmail);
+        txtPassword=(EditText) findViewById(R.id.txtPassword);
+        txtRePassword=(EditText) findViewById(R.id.txtRePassword);
+        txtLoginHere=(TextView)findViewById(R.id.hp_txtViewLogin);
+        btnRegister=(Button)findViewById(R.id.btnRegister);
     }
 
     private void emptyField() {
