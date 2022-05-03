@@ -147,7 +147,7 @@ public class DetailScreen extends AppCompatActivity {
                 cart.setLivingarea(livingareaHouse);
                 cart.setImage(imageHouse);
                 cartReference.document(documentId).set(cart);
-                Toast.makeText(DetailScreen.this, "Added to your cart success!", Toast.LENGTH_LONG).show();
+                ToastPerfect.makeText(DetailScreen.this, ToastPerfect.SUCCESS, "Added success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
             }
         });
         btnBuy.setOnClickListener(new View.OnClickListener() {
