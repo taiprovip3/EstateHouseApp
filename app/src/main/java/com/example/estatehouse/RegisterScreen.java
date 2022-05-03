@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.estatehouse.dao.UserDao;
 import com.example.estatehouse.entity.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,8 +44,10 @@ public class RegisterScreen extends AppCompatActivity {
     private String password;
     private String rePassword;
     private FirebaseFirestore db;
-    CollectionReference userReference;
-    String documentId = UUID.randomUUID().toString();
+    private CollectionReference userReference;
+    private String documentId = UUID.randomUUID().toString();
+
+    private UserDao userDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,19 +93,28 @@ public class RegisterScreen extends AppCompatActivity {
                                 public void onComplete(@Nonnull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         Map<String, Object> userObject = new HashMap<>();
+                                        String firstName="Un";
+                                        String lastName="know";
+                                        String role="member";
+                                        String location="US";
+                                        String phoneNumber="";
+                                        double balance=0.0;
+                                        String avatar="image_6.png";
                                         userObject.put("email", email);
                                         userObject.put("password", password);
-                                        userObject.put("first_name", "Un");
-                                        userObject.put("last_name", "know");
-                                        userObject.put("role", "member");
-                                        userObject.put("location", "US");
-                                        userObject.put("phone_number", "");
-                                        userObject.put("balance", 0.0);
-                                        userObject.put("avatar", "image_6.png");
+                                        userObject.put("first_name", firstName);
+                                        userObject.put("last_name", lastName);
+                                        userObject.put("role", role);
+                                        userObject.put("location", location);
+                                        userObject.put("phone_number", phoneNumber);
+                                        userObject.put("balance", balance);
+                                        userObject.put("avatar", avatar);
                                         userObject.put("documentId", documentId);
                                         userReference
                                                 .document(documentId)
                                                 .set(userObject);
+                                        User user=new User(documentId, email, firstName, lastName, role, location, phoneNumber, password, balance, avatar);
+                                        userDao.addUser(user);
                                         ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.SUCCESS, "Register success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                         emptyField();
                                     } else {
@@ -117,6 +129,7 @@ public class RegisterScreen extends AppCompatActivity {
     }
 
     private void anhXa() {
+        userDao=new UserDao(this);
         db = FirebaseFirestore.getInstance();
         userReference = db.collection("users");
         txtEmail=(EditText) findViewById(R.id.txtEmail);
