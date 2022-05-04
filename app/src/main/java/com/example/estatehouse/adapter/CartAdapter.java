@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.example.estatehouse.CartScreen;
 import com.example.estatehouse.DetailScreen;
 import com.example.estatehouse.R;
+import com.example.estatehouse.dao.CartDao;
 import com.example.estatehouse.entity.HouseCart;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,6 +44,7 @@ public class CartAdapter extends BaseAdapter {
     private HouseCart hc;
     private AlertDialog dialogBuy;
     private AlertDialog.Builder builderBuy;
+    CartDao cartDao;
 
     public CartAdapter(List<HouseCart> houseCarts, Context context){
         this.houseCarts = houseCarts;
@@ -169,5 +171,8 @@ public class CartAdapter extends BaseAdapter {
                         Toast.makeText(context, "Error deleting document" + e, Toast.LENGTH_LONG).show();
                     }
                 });
+        hc=new HouseCart();
+        String documentId=hc.getDocumentId().toString();
+        cartDao.QueryData("DELETE * FROM CART WHERE Id="+documentId+"");
     }
 }

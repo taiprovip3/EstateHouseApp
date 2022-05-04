@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.estatehouse.dao.HouseDao;
+import com.example.estatehouse.dao.CartDao;
 import com.example.estatehouse.entity.House;
 import com.example.estatehouse.entity.HouseCart;
 import com.example.estatehouse.entity.User;
@@ -52,18 +52,25 @@ public class DetailScreen extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private CollectionReference cartReference, userReference;
-    private String imageHouse, addressHouse, documentIdHouse, descriptionHouse, sellerHouse, typeHouse;
-    private double priceHouse;
-    private int bedroomHouse, bathroomHouse, livingareaHouse;
-    private User user;
-    private AlertDialog dialogBuy;
-    private AlertDialog.Builder builderBuy;
-    private HouseDao houseDao;
+    String imageHouse, addressHouse, documentIdHouse, descriptionHouse, sellerHouse, typeHouse;
+    double priceHouse;
+    int bedroomHouse, bathroomHouse, livingareaHouse;
+    User user;
+    AlertDialog dialogBuy;
+    AlertDialog.Builder builderBuy;
+    CartDao cartDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_screen);
+        //làm việc với sqlite
+        //tạo table
+        cartDao=new CartDao(this,"EstateHouse.sqlite",null,1);
+        cartDao.QueryData("CREATE TABLE IF NOT EXITS CART " +
+                "(Id INTEGER PRIMARY KEY AUTOINCREMENT,EMAIL VARCHAR(200),COST DOUBLE,SELLER VARCHAR(200)" +
+                "BEDROOMS INT,BATHROOMS INT ,LIVINGAREA INT,IMAGE VARCHAR(200)");
+
 
         anhXa();
         onClick();
@@ -112,25 +119,19 @@ public class DetailScreen extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        currentUser = mAuth.getCurrentUser();
-        if(currentUser != null) {
-            userReference.whereEqualTo("email", currentUser.getEmail())
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    user = document.toObject(User.class);
-                                    balanceView.setText("$" + user.getBalance());
-                                }
+        userReference.whereEqualTo("email", currentUser.getEmail())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot document: task.getResult()){
+                                user = document.toObject(User.class);
+                                balanceView.setText("$" + user.getBalance());
                             }
                         }
-                    });
-        } else{
-            Intent intent = new Intent(DetailScreen.this, LoginScreen.class);
-            startActivity(intent);
-        }
+                    }
+                });
     }
 
     private void onClick() {
@@ -144,8 +145,15 @@ public class DetailScreen extends AppCompatActivity {
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String documentId = UUID.randomUUID().toString();
                 HouseCart cart = new HouseCart();
+                String documentId = UUID.randomUUID().toString();
+                String email=cart.getEmail().toString();
+                double cost=cart.getCost();
+                String seller=cart.getSeller().toString();
+                int bedrooms=cart.getBedrooms();
+                int bathrooms=cart.getBathrooms();
+                int livingarea=cart.getLivingarea();
+                String image=cart.getImage().toString();
                 cart.setDocumentId(documentId);
                 cart.setEmail(currentUser.getEmail());
                 cart.setCost(priceHouse);
@@ -156,6 +164,16 @@ public class DetailScreen extends AppCompatActivity {
                 cart.setImage(imageHouse);
                 cartReference.document(documentId).set(cart);
                 ToastPerfect.makeText(DetailScreen.this, ToastPerfect.SUCCESS, "Added success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                //Kiểm tra giá trị đâu vào của dữ liệu.
+                //Nếu đúng thì insert vào table của sqlite
+                if (email.equals("")){
+                    Toast.makeText(getApplicationContext(),"Vui lòng nhập dữ liêu",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+                    cartDao.QueryData("INSERT INTO CART VALUES(NULL,'"+email+","+cost+","+seller+","+bedrooms+","+bathrooms+","+livingarea+","+image+"')");
+                    Toast.makeText(getApplicationContext(),"Thêm thành công",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         btnBuy.setOnClickListener(new View.OnClickListener() {
@@ -180,8 +198,6 @@ public class DetailScreen extends AppCompatActivity {
                             userReference.document(user.getDocumentId())
                                     .update("balance", moneyLeft);
                             ToastPerfect.makeText(DetailScreen.this, ToastPerfect.SUCCESS, "You purchased success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
-
-                            houseDao.deleteHouse("asd");
                         }
                     }
                 });
@@ -193,6 +209,7 @@ public class DetailScreen extends AppCompatActivity {
 
     private void anhXa() {
         mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
         cartReference = db.collection("carts");
         userReference = db.collection("users");
@@ -211,6 +228,5 @@ public class DetailScreen extends AppCompatActivity {
         typeView = findViewById(R.id.dt_typeView);
         btnBack = findViewById(R.id.dt_btnBack);
         balanceView = findViewById(R.id.dt_balanceView);
-        houseDao = new HouseDao(DetailScreen.this);
     }
 }
