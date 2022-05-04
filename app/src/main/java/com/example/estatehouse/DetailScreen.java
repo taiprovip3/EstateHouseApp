@@ -146,13 +146,6 @@ public class DetailScreen extends AppCompatActivity {
             public void onClick(View view) {
                 HouseCart cart = new HouseCart();
                 String documentId = UUID.randomUUID().toString();
-                String email=cart.getEmail();
-                double cost=cart.getCost();
-                String seller=cart.getSeller();
-                int bedrooms=cart.getBedrooms();
-                int bathrooms=cart.getBathrooms();
-                int livingarea=cart.getLivingarea();
-                String image=cart.getImage();
                 cart.setDocumentId(documentId);
                 cart.setEmail(currentUser.getEmail());
                 cart.setCost(priceHouse);

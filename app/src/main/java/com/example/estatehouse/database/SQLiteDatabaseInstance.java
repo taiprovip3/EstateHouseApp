@@ -68,7 +68,7 @@ public class SQLiteDatabaseInstance extends SQLiteOpenHelper {
                 +KEY_FIRST_NAME+" TEXT,"+KEY_LAST_NAME+" TEXT,"+KEY_LOCATION+" TEXT,"+KEY_PASSWORD+" TEXT,"
                 +KEY_PHONE_NUMBER+" TEXT,"+KEY_ROLE+" TEXT)";
 
-        String create_carts_table = "CREATE TABLE name (id TEXT PRIMARY KEY, email TEXT, cost DOUBLE, seller TEXT, bed INTEGER, bath INTEGER, living INTEGER, image TEXT)";
+        String create_carts_table = "CREATE TABLE "+TABLE_CARTS+" ("+KEY_CARTID+" TEXT PRIMARY KEY, "+KEY_EMAIL+" TEXT, "+KEY_COST+" DOUBLE, "+KEY_SELLER+" TEXT, "+KEY_BEDROOMS+" INTEGER, "+KEY_BATHROOMS+" INTEGER, "+KEY_LIVINGAREA+" INTEGER, "+KEY_IMAGE+" TEXT)";
 
         Log.d("OnCreate table created ", TABLE_HOUSES);
         Log.d("OnCreate table created ", TABLE_TAGS);
