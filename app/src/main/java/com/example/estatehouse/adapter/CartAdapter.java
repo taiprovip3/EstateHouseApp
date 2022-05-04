@@ -173,6 +173,6 @@ public class CartAdapter extends BaseAdapter {
                 });
         hc=new HouseCart();
         String documentId=hc.getDocumentId().toString();
-        cartDao.QueryData("DELETE * FROM CART WHERE Id="+documentId+"");
+        cartDao.deleteCart(documentId);
     }
 }
