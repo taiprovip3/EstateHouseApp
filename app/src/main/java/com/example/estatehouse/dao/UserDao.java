@@ -6,30 +6,31 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.estatehouse.database.SQLiteDatabaseInstance;
 import com.example.estatehouse.entity.User;
 
 public class UserDao{
 
+    private SQLiteDatabaseInstance instance;
 
     public UserDao(Context context){
-
+        this.instance = SQLiteDatabaseInstance.getInstance(context);
     }
 
     public void addUser(User user){
-//        SQLiteDatabase db=this.getWritableDatabase();
+        SQLiteDatabase db=instance.getWritableDatabase();
         ContentValues values=new ContentValues();
-        values.put("", user.getDocumentId());
-        values.put("", user.getAvatar());
-        values.put("",user.getBalance());
-        values.put("",user.getEmail());
-        values.put("",user.getFirstName());
-        values.put("",user.getLastName());
-        values.put("",user.getLocation());
-        values.put("", user.getPassword());
-        values.put("",user.getPhonenumber());
-        values.put("",user.getRole());
-//        db.insert("",null,values);
-        Log.d("New user registed", "added user :: " + user);
-//        db.close();
+        values.put("Id", user.getDocumentId());
+        values.put("Avatar", user.getAvatar());
+        values.put("Balance",user.getBalance());
+        values.put("Email",user.getEmail());
+        values.put("First_name",user.getFirstName());
+        values.put("Last_name",user.getLastName());
+        values.put("Location",user.getLocation());
+        values.put("Password", user.getPassword());
+        values.put("Phone_number",user.getPhonenumber());
+        values.put("Role",user.getRole());
+        db.insert("Users",null,values);
+        db.close();
     }
 }
