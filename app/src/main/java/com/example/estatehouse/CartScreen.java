@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.estatehouse.adapter.CartAdapter;
+import com.example.estatehouse.dao.CartDao;
 import com.example.estatehouse.entity.HouseCart;
 import com.example.estatehouse.entity.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -54,7 +55,6 @@ public class CartScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_screen);
-
        anhXa();
         onClick();
 
