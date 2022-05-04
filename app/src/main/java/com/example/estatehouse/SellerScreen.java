@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.estatehouse.dao.HouseDao;
 import com.example.estatehouse.entity.House;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -54,8 +55,9 @@ public class SellerScreen extends AppCompatActivity {
     TextView btnChooseImage;
     private Uri filePath;
     private final int PICK_IMAGE_REQUEST = 71;
-    String randomImageSelectedNameGenerated = "house_description_1.png";
-    String documentId = UUID.randomUUID().toString();
+    private String randomImageSelectedNameGenerated = "house_description_1.png";
+    private String documentId = UUID.randomUUID().toString();
+    private HouseDao houseDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +140,20 @@ public class SellerScreen extends AppCompatActivity {
                     ToastPerfect.makeText(SellerScreen.this, ToastPerfect.SUCCESS, "Register successfully product :: " + documentId, ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     uploadImage();
                     emptyField();
+                    House house = new House();
+                    house.setDocumentId(documentId);
+                    house.setType(type);
+                    house.setCost(price);
+                    house.setAddress(address);
+                    house.setSale(sale);
+                    house.setTags(tags);
+                    house.setBedrooms(bedroom);
+                    house.setBathrooms(bathroom);
+                    house.setLivingarea(livingArea);
+                    house.setImage(randomImageSelectedNameGenerated);
+                    house.setDescription(description);
+                    house.setSeller(seller);
+                    houseDao.registerHouse(house);
                 } else ToastPerfect.makeText(SellerScreen.this, ToastPerfect.ERROR, "Please fill out fields required!", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
             }
         });
@@ -162,6 +178,7 @@ public class SellerScreen extends AppCompatActivity {
         edLivingArea = findViewById(R.id.sll_edLivingArea);
         homePage = findViewById(R.id.sll_btnBack);
         imageChosen = findViewById(R.id.sll_imageChosen);
+        houseDao = new HouseDao(this);
     }
 
     private void uploadImage() {

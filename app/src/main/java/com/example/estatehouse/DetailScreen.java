@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.estatehouse.dao.HouseDao;
 import com.example.estatehouse.entity.House;
 import com.example.estatehouse.entity.HouseCart;
 import com.example.estatehouse.entity.User;
@@ -51,12 +52,13 @@ public class DetailScreen extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private CollectionReference cartReference, userReference;
-    String imageHouse, addressHouse, documentIdHouse, descriptionHouse, sellerHouse, typeHouse;
-    double priceHouse;
-    int bedroomHouse, bathroomHouse, livingareaHouse;
-    User user;
-    AlertDialog dialogBuy;
-    AlertDialog.Builder builderBuy;
+    private String imageHouse, addressHouse, documentIdHouse, descriptionHouse, sellerHouse, typeHouse;
+    private double priceHouse;
+    private int bedroomHouse, bathroomHouse, livingareaHouse;
+    private User user;
+    private AlertDialog dialogBuy;
+    private AlertDialog.Builder builderBuy;
+    private HouseDao houseDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,19 +112,25 @@ public class DetailScreen extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        userReference.whereEqualTo("email", currentUser.getEmail())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            for (QueryDocumentSnapshot document: task.getResult()){
-                                user = document.toObject(User.class);
-                                balanceView.setText("$" + user.getBalance());
+        currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            userReference.whereEqualTo("email", currentUser.getEmail())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    user = document.toObject(User.class);
+                                    balanceView.setText("$" + user.getBalance());
+                                }
                             }
                         }
-                    }
-                });
+                    });
+        } else{
+            Intent intent = new Intent(DetailScreen.this, LoginScreen.class);
+            startActivity(intent);
+        }
     }
 
     private void onClick() {
@@ -172,6 +180,8 @@ public class DetailScreen extends AppCompatActivity {
                             userReference.document(user.getDocumentId())
                                     .update("balance", moneyLeft);
                             ToastPerfect.makeText(DetailScreen.this, ToastPerfect.SUCCESS, "You purchased success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
+
+                            houseDao.deleteHouse("asd");
                         }
                     }
                 });
@@ -183,7 +193,6 @@ public class DetailScreen extends AppCompatActivity {
 
     private void anhXa() {
         mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
         cartReference = db.collection("carts");
         userReference = db.collection("users");
@@ -202,5 +211,6 @@ public class DetailScreen extends AppCompatActivity {
         typeView = findViewById(R.id.dt_typeView);
         btnBack = findViewById(R.id.dt_btnBack);
         balanceView = findViewById(R.id.dt_balanceView);
+        houseDao = new HouseDao(DetailScreen.this);
     }
 }

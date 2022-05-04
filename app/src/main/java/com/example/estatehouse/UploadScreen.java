@@ -41,7 +41,6 @@ public class UploadScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_screen);
 
-        //Ánh xạ
         anhXa();
         onClick();
     }

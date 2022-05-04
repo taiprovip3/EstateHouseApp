@@ -41,7 +41,6 @@ public class BalanceScreen extends AppCompatActivity {
     private TextView txtName, txtRole, txtBalance, btnBack;
     private Button btnSetting, btnCart;
     private User user;
-    private UserDao userDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +76,6 @@ public class BalanceScreen extends AppCompatActivity {
                                 txtName.setText(user.getFirstName() + " " + user.getLastName());
                                 txtRole.setText(user.getRole());
                                 txtBalance.setText("$" + String.valueOf(user.getBalance()));
-                                userDao.addUser(user);
                             }
                         } else
                             ToastPerfect.makeText(BalanceScreen.this, ToastPerfect.ERROR, "ERROR, get document failed", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
@@ -117,7 +115,6 @@ public class BalanceScreen extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         user = new User();
-        userDao=new UserDao(this);
         imgAvatar = findViewById(R.id.imgAvatar);
         txtName = findViewById(R.id.txtUserName);
         txtRole = findViewById(R.id.txtRole);
