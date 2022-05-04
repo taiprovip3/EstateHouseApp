@@ -7,28 +7,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class CartDao extends SQLiteOpenHelper {
-    public CartDao(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+import com.example.estatehouse.database.SQLiteDatabaseInstance;
+import com.example.estatehouse.entity.HouseCart;
+
+public class CartDao {
+
+    private SQLiteDatabaseInstance instance;
+
+    public CartDao(Context context) {
+        this.instance = SQLiteDatabaseInstance.getInstance(context.getApplicationContext());
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+    public void addToCart(HouseCart cart){
+        //..do somethings here
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void deleteCart(String cartId){
+        //..do your code here
+    }
 
-    }
-    //truy vấn thêm xóa sửa
-    public void QueryData(String sql){
-        SQLiteDatabase database=getWritableDatabase();
-        database.execSQL(sql);
-    }
-    //lấy giá trị các bảng
-    public Cursor GetData(String sql){
-        SQLiteDatabase database=getReadableDatabase();
-        return  database.rawQuery(sql,null);
-    }
 }

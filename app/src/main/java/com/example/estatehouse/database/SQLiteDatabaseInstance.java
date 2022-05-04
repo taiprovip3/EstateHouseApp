@@ -43,7 +43,8 @@ public class SQLiteDatabaseInstance extends SQLiteOpenHelper {
     private static final String KEY_TAGID = "Tagid";
     private static final String KEY_TAG = "Tag";
 
-    private static final String TABLE_Carts = "Carts";
+    private static final String TABLE_CARTS = "Carts";
+    private static final String KEY_CARTID = "Cartid";
 
     public static SQLiteDatabaseInstance getInstance(Context context){
         if(instance == null){
@@ -67,12 +68,16 @@ public class SQLiteDatabaseInstance extends SQLiteOpenHelper {
                 +KEY_FIRST_NAME+" TEXT,"+KEY_LAST_NAME+" TEXT,"+KEY_LOCATION+" TEXT,"+KEY_PASSWORD+" TEXT,"
                 +KEY_PHONE_NUMBER+" TEXT,"+KEY_ROLE+" TEXT)";
 
+        String create_carts_table = "CREATE TABLE name (id TEXT PRIMARY KEY, email TEXT, cost DOUBLE, seller TEXT, bed INTEGER, bath INTEGER, living INTEGER, image TEXT)";
+
         Log.d("OnCreate table created ", TABLE_HOUSES);
         Log.d("OnCreate table created ", TABLE_TAGS);
         Log.d("OnCreate table created ", TABLE_USERS);
+        Log.d("OnCreate table created ", TABLE_CARTS);
         db.execSQL(create_houses_table);
         db.execSQL(create_tags_table);
         db.execSQL(create_users_table);
+        db.execSQL(create_carts_table);
     }
 
     @Override
@@ -80,9 +85,11 @@ public class SQLiteDatabaseInstance extends SQLiteOpenHelper {
         Log.d("onUpgrade table ::", TABLE_HOUSES);
         Log.d("onUpgrade table ::", TABLE_TAGS);
         Log.d("onUpgrade table ::", TABLE_USERS);
+        Log.d("onUpgrade table ::", TABLE_CARTS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_HOUSES);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_TAGS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_USERS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_CARTS);
         onCreate(sqLiteDatabase);
     }
 }
