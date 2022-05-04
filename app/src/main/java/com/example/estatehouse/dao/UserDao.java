@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.estatehouse.entity.User;
 
@@ -56,6 +57,7 @@ public class UserDao extends SQLiteOpenHelper {
         values.put(KEY_PHONE_NUMBER,user.getPhonenumber());
         values.put(KEY_ROLE,user.getRole());
         db.insert(TABLE_USERS,null,values);
+        Log.d("New user registed", "added user :: " + user);
         db.close();
     }
 }

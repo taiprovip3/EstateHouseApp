@@ -129,7 +129,6 @@ public class RegisterScreen extends AppCompatActivity {
     }
 
     private void anhXa() {
-        userDao=new UserDao(this);
         db = FirebaseFirestore.getInstance();
         userReference = db.collection("users");
         txtEmail=(EditText) findViewById(R.id.txtEmail);
@@ -137,6 +136,7 @@ public class RegisterScreen extends AppCompatActivity {
         txtRePassword=(EditText) findViewById(R.id.txtRePassword);
         txtLoginHere=(TextView)findViewById(R.id.hp_txtViewLogin);
         btnRegister=(Button)findViewById(R.id.btnRegister);
+        userDao=new UserDao(this);
     }
 
     private void emptyField() {

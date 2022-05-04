@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.estatehouse.dao.HouseDao;
+import com.example.estatehouse.database.SQLiteDatabaseInstance;
 import com.example.estatehouse.entity.House;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,7 +59,7 @@ public class SellerScreen extends AppCompatActivity {
     private final int PICK_IMAGE_REQUEST = 71;
     private String randomImageSelectedNameGenerated = "house_description_1.png";
     private String documentId = UUID.randomUUID().toString();
-    private HouseDao houseDao;
+    HouseDao houseDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,24 +70,6 @@ public class SellerScreen extends AppCompatActivity {
         onClick();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null ) {
-            filePath = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                imageChosen.setImageBitmap(bitmap);
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-    //--------------------methods--------------------//
     private void onClick() {
         btnChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,5 +241,21 @@ public class SellerScreen extends AppCompatActivity {
         edBedroom.setText("");
         edBathroom.setText("");
         edLivingArea.setText("");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null ) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                imageChosen.setImageBitmap(bitmap);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
