@@ -117,6 +117,8 @@ public class RegisterScreen extends AppCompatActivity {
                                         userDao.addUser(user);
                                         ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.SUCCESS, "Register success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                         emptyField();
+                                        Intent intent = new Intent(RegisterScreen.this, LoginScreen.class);
+                                        startActivity(intent);
                                     } else {
                                         ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.ERROR, "Register failed", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                     }
