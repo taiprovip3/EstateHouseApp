@@ -4,19 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#7DDDDD"
-    android:backgroundTintMode="add"
+    android:background="#AEEDE5"
+    android:backgroundTint="#AEEDE5"
     tools:context=".SellerScreen">
 
     <EditText
         android:id="@+id/sll_edDescription"
         android:layout_width="335dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="Type the your description"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/sll_edTags"
@@ -51,6 +53,7 @@
         android:ems="10"
         android:hint="number"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/sll_edLivingArea"
         app:layout_constraintHorizontal_bias="0.495"
@@ -66,6 +69,7 @@
         android:ems="10"
         android:hint="number"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView58" />
@@ -113,6 +117,7 @@
         android:ems="10"
         android:hint="number"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView56" />
@@ -143,28 +148,30 @@
 
     <TextView
         android:id="@+id/sll_btnChooseImage"
-        android:layout_width="56dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
         android:text="Choose image"
         android:textColor="#1533DA"
         android:textStyle="italic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sll_imageChosen" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/sll_edType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="'RENT' or 'BUY'"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/sll_imageChosen"
+        app:layout_constraintStart_toEndOf="@+id/textView50"
         app:layout_constraintTop_toBottomOf="@+id/sll_imageChosen" />
 
     <TextView
@@ -187,6 +194,7 @@
         android:ems="10"
         android:hint="Type the cost USD currency"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/sll_edType"
@@ -223,6 +231,7 @@
         android:ems="10"
         android:hint="Type the address"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/sll_edPrice"
@@ -248,6 +257,7 @@
         android:ems="10"
         android:hint="A number (not include %)"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/sll_edAddress"
@@ -273,6 +283,7 @@
         android:ems="10"
         android:hint="Don't use multi tag, just one"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/sll_edSale"
@@ -300,14 +311,12 @@
 
     <ImageView
         android:id="@+id/sll_imageChosen"
-        android:layout_width="0dp"
+        android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/sll_btnChooseImage"
-        app:layout_constraintTop_toBottomOf="@+id/pr_updateProfile"
+        app:layout_constraintEnd_toEndOf="@+id/sll_btnChooseImage"
+        app:layout_constraintStart_toStartOf="@+id/sll_btnChooseImage"
+        app:layout_constraintTop_toBottomOf="@+id/sll_btnChooseImage"
         app:srcCompat="@drawable/can_ho_nha_mat_dat_1_1" />
 
     <ImageView

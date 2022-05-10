@@ -10,7 +10,7 @@ public class SQLiteDatabaseInstance extends SQLiteOpenHelper {
 
     private static SQLiteDatabaseInstance instance = null;
 
-    private static final String DATABASE_NAME = "EstateHouse.db";
+    private static final String DATABASE_NAME = "EstateHouseApp.db";
     private static final int DATABASE_VERSION = 1;
     private Context context;
 
@@ -61,14 +61,14 @@ public class SQLiteDatabaseInstance extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String create_houses_table = "CREATE TABLE " + TABLE_HOUSES + "("+KEY_HOUSEID+" TEXT PRIMARY KEY,"+KEY_TYPE+" TEXT,"+KEY_COST+" DOUBLE,"+KEY_ADDRESS+" TEXT,"+KEY_SALE+" DOUBLE,"+KEY_BEDROOMS+" INTEGER,"+KEY_BATHROOMS+" INTEGER,"+KEY_LIVINGAREA+" INTEGER,"+KEY_IMAGE+" TEXT,"+KEY_DESCRIPTION+" TEXT,"+KEY_SELLER+" TEXT)";
 
-        String create_tags_table = "CREATE TABLE "+TABLE_TAGS+" ("+KEY_TAGID+" INTEGER PRIMARY KEY, "+KEY_HOUSEID+" TEXT, "+KEY_TAG+" TEXT)";
+        String create_tags_table = "CREATE TABLE "+TABLE_TAGS+"("+KEY_TAGID+" TEXT PRIMARY KEY, "+KEY_HOUSEID+" TEXT, "+KEY_TAG+" TEXT)";
 
         String create_users_table="CREATE TABLE "+TABLE_USERS+"("
                 +KEY_USERID+" TEXT PRIMARY KEY,"+KEY_AVATAR+" TEXT,"+KEY_BALANCE+" DOUBLE,"+KEY_EMAIL+" TEXT,"
                 +KEY_FIRST_NAME+" TEXT,"+KEY_LAST_NAME+" TEXT,"+KEY_LOCATION+" TEXT,"+KEY_PASSWORD+" TEXT,"
                 +KEY_PHONE_NUMBER+" TEXT,"+KEY_ROLE+" TEXT)";
 
-        String create_carts_table = "CREATE TABLE "+TABLE_CARTS+" ("+KEY_CARTID+" TEXT PRIMARY KEY, "+KEY_EMAIL+" TEXT, "+KEY_COST+" DOUBLE, "+KEY_SELLER+" TEXT, "+KEY_BEDROOMS+" INTEGER, "+KEY_BATHROOMS+" INTEGER, "+KEY_LIVINGAREA+" INTEGER, "+KEY_IMAGE+" TEXT)";
+        String create_carts_table = "CREATE TABLE "+TABLE_CARTS+"("+KEY_CARTID+" TEXT PRIMARY KEY, "+KEY_EMAIL+" TEXT, "+KEY_COST+" DOUBLE, "+KEY_SELLER+" TEXT, "+KEY_BEDROOMS+" INTEGER, "+KEY_BATHROOMS+" INTEGER, "+KEY_LIVINGAREA+" INTEGER, "+KEY_IMAGE+" TEXT)";
 
         Log.d("OnCreate table created ", TABLE_HOUSES);
         Log.d("OnCreate table created ", TABLE_TAGS);

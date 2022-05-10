@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#FAFAFA"
+    android:background="#ECF4F4"
+    android:backgroundTint="#F6FBFB"
     tools:context=".HomepageScreen">
 
     <TextView
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:text="Seller"
-        android:textColor="#000000"
+        android:textColor="#0826CF"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/hp_txtViewLanguage"
         app:layout_constraintTop_toBottomOf="@+id/hp_sellerIcon" />
@@ -42,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Help"
-        android:textColor="#000000"
+        android:textColor="#0826CF"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hp_helpIcon" />
@@ -62,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Language"
-        android:textColor="#000000"
+        android:textColor="#0826CF"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/hp_txtViewHelp"
         app:layout_constraintTop_toBottomOf="@+id/hp_languageIcon" />
@@ -96,6 +97,7 @@
         android:text="Find Your Best House"
         android:textColor="#000000"
         android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hp_txtViewLogin" />
 
@@ -107,6 +109,7 @@
         android:layout_marginTop="8dp"
         android:text="Location"
         android:textColor="#000000"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hp_txtViewTitle" />
 
@@ -126,6 +129,7 @@
         android:layout_marginTop="8dp"
         android:text="Type"
         android:textColor="#000000"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_countries" />
 
@@ -133,16 +137,15 @@
         android:id="@+id/rdGroupType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
         android:orientation="horizontal"
-        app:layout_constraintStart_toEndOf="@+id/hp_txtViewType"
+        app:layout_constraintStart_toStartOf="@+id/spinner_countries"
         app:layout_constraintTop_toBottomOf="@+id/spinner_cities">
 
         <RadioButton
-            android:checked="true"
             android:id="@+id/radioButtonBuy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="Buy" />
 
         <RadioButton
@@ -167,7 +170,7 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="#F4EBEB"
+        android:background="#9F9B9A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -249,6 +252,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginTop="2dp"
+        android:fontFamily="serif-monospace"
         android:text="Recommended for new:"
         android:textColor="#000000"
         android:textSize="14sp"

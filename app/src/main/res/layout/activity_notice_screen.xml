@@ -4,107 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E1C6C6"
+    android:background="#6DE2F1"
     tools:context=".NoticeScreen">
 
     <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="6"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_m5"
-        app:layout_constraintEnd_toEndOf="@+id/txt_m5" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="5"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_m4"
-        app:layout_constraintEnd_toEndOf="@+id/txt_m4" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_m2"
-        app:layout_constraintEnd_toEndOf="@+id/txt_m2" />
-
-    <TextView
-        android:id="@+id/bl_btnBack"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="168dp"
         android:layout_marginEnd="169dp"
-        android:text="Notification"
+        android:text="Your notifications"
         android:textColor="@color/purple_700"
         android:textSize="25sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView18" />
 
-    <TextView
-        android:id="@+id/txt_m1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:drawableLeft="@drawable/image_2"
-        android:text="*Các căn nhà đang được giảm giá đến mua ngay ?"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bl_btnBack" />
-
-    <TextView
-        android:id="@+id/txt_m2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:drawableLeft="@drawable/image_2"
-        android:text="*Bạn nhận được vocher giảm giá khi mua căn nhà >$5000"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_m1" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_hotro"
-        app:layout_constraintEnd_toEndOf="@+id/txt_hotro" />
-
-    <TextView
-        android:id="@+id/txt_hotro"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:drawableLeft="@drawable/image_21"
-        android:text="*Bạn có thắc mắt gì vui lòng đến trang help để được hỗ trợ về sản phẩm"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_m2" />
-
     <ImageView
-        android:id="@+id/btn_home"
+        android:id="@+id/notic_goHome"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#00BCD4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,68 +34,22 @@
         android:id="@+id/imageView18"
         android:layout_width="50dp"
         android:layout_height="30dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/bl_btnBack"
-        app:layout_constraintStart_toStartOf="@+id/bl_btnBack"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/images" />
 
-    <TextView
-        android:id="@+id/txt_m3"
+    <ListView
+        android:id="@+id/noti_listView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/image_2"
-        android:text="Giảm 20% tiền mua 1 căn nhà áp dụng từ 8/5-10/5/2022 khi mua nhà"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/txt_hotro"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/txt_hotro"
-        app:layout_constraintTop_toBottomOf="@+id/txt_hotro" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="4"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_m3"
-        app:layout_constraintEnd_toEndOf="@+id/txt_m3" />
-
-    <TextView
-        android:id="@+id/txt_m4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/image_2"
-        android:text="Nhân dịp 30/4,1/5 được giảm giá 10% khi mua các căn nhà"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/txt_m3"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/txt_m3"
-        app:layout_constraintTop_toBottomOf="@+id/txt_m3" />
-
-    <TextView
-        android:id="@+id/txt_m5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/image_2"
-        android:text="Tặng $100 khi thanh toán các khoản trên của hàng"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/txt_m4"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/txt_m4"
-        app:layout_constraintTop_toBottomOf="@+id/txt_m4" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_m1"
-        app:layout_constraintEnd_toEndOf="@+id/txt_m1" />
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/notic_goHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

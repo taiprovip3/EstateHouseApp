@@ -90,7 +90,7 @@ public class HomepageScreen extends AppCompatActivity {
                             homepageAdapter = new HomepageAdapter(houses, HomepageScreen.this);
                             listView.setAdapter(homepageAdapter);
                         } else
-                            ToastPerfect.makeText(HomepageScreen.this, ToastPerfect.ERROR, "ERROR, " + task.getException(), ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                            ToastPerfect.makeText(HomepageScreen.this, ToastPerfect.ERROR, "Could't load data, please check your network connection." + task.getException(), ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     }
                 });
 

@@ -61,10 +61,9 @@ public class LoginScreen extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (!task.isSuccessful()){
-                                    ToastPerfect.makeText(LoginScreen.this, ToastPerfect.ERROR, "Login failed", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                                    ToastPerfect.makeText(LoginScreen.this, ToastPerfect.ERROR, "Login failed, please check your network connection.", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                 }
                                 else {
-                                    Toast.makeText(LoginScreen.this, "Login successully, we redirect you to homepage", Toast.LENGTH_LONG).show();
                                     ToastPerfect.makeText(LoginScreen.this, ToastPerfect.SUCCESS, "Login successully, you were redirected to HomepageScreen.java", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                     Intent intent=new Intent(LoginScreen.this,HomepageScreen.class);
                                     startActivity(intent);
