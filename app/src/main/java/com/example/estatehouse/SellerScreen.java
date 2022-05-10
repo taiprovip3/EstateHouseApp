@@ -68,6 +68,8 @@ public class SellerScreen extends AppCompatActivity {
 
         anhXa();
         onClick();
+//        houseDao.deleteTable("Tags");
+//        houseDao.selectFromTableTest();
     }
 
     private void onClick() {
