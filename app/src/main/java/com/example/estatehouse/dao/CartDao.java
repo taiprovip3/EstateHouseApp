@@ -22,14 +22,14 @@ public class CartDao {
     public void addToCart(HouseCart cart){
         SQLiteDatabase db = instance.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("id", cart.getDocumentId());
-        values.put("email", cart.getEmail());
-        values.put("cost",cart.getCost());
-        values.put("seller", cart.getSeller());
-        values.put("bed", cart.getBedrooms());
-        values.put("bath", cart.getBathrooms());
-        values.put("living", cart.getLivingarea());
-        values.put("image", cart.getImage());
+        values.put("Cartid", cart.getDocumentId());
+        values.put("Email", cart.getEmail());
+        values.put("Cost",cart.getCost());
+        values.put("Seller", cart.getSeller());
+        values.put("Bedrooms", cart.getBedrooms());
+        values.put("Bathrooms", cart.getBathrooms());
+        values.put("Livingarea", cart.getLivingarea());
+        values.put("Image", cart.getImage());
         db.insert("Carts",null,values);
         Log.d("Registed a new house", "added a new cart :: " + cart);
         db.close();

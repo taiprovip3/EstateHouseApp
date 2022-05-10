@@ -107,46 +107,34 @@ public class CartAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                builderBuy = new AlertDialog.Builder(context);
-                builderBuy.setTitle("Confirmation buy/rent a house");
-                builderBuy.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                });
-                builderBuy.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        CollectionReference userReference = db.collection("users");
-                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                        FirebaseUser currentUser = mAuth.getCurrentUser();
-                        String email = currentUser.getEmail();
-                        userReference.whereEqualTo("email", email)
-                                .get()
-                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                        if(task.isSuccessful()){
-                                            double userBalance = 0.0;
-                                            String documentId = "";
-                                            for(QueryDocumentSnapshot document : task.getResult()){
-                                                userBalance = document.getDouble("balance");
-                                                documentId = document.getId();
-                                            }
-                                            if(userBalance < hc.getCost()){
-                                                ToastPerfect.makeText(context, ToastPerfect.ERROR, "You don't have enough $ to purchase", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
-                                            } else{
-                                                userReference.document(documentId)
-                                                        .update("balance", userBalance - hc.getCost());
-                                                ToastPerfect.makeText(context, ToastPerfect.SUCCESS, "You purchased success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
-                                                removeItem();
-                                            }
-                                        }
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                CollectionReference userReference = db.collection("users");
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                String email = currentUser.getEmail();
+                userReference.whereEqualTo("email", email)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    double userBalance = 0.0;
+                                    String documentId = "";
+                                    for(QueryDocumentSnapshot document : task.getResult()){
+                                        userBalance = document.getDouble("balance");
+                                        documentId = document.getId();
                                     }
-                                });
-                    }
-                });
+                                    if(userBalance < hc.getCost()){
+                                        ToastPerfect.makeText(context, ToastPerfect.ERROR, "You don't have enough $ to purchase", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
+                                    } else{
+                                        userReference.document(documentId)
+                                                .update("balance", userBalance - hc.getCost());
+                                        ToastPerfect.makeText(context, ToastPerfect.SUCCESS, "You purchased success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
+                                        removeItem();
+                                    }
+                                }
+                            }
+                        });
             }
         });
         return view;
