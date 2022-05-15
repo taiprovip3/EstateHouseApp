@@ -120,7 +120,7 @@ public class RegisterScreen extends AppCompatActivity {
                                         Intent intent = new Intent(RegisterScreen.this, LoginScreen.class);
                                         startActivity(intent);
                                     } else {
-                                        ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.ERROR, "Register failed, please check your network connection.", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                                        ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.ERROR, "Register failed: account existed or no connection.", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                     }
                                 }
                             });

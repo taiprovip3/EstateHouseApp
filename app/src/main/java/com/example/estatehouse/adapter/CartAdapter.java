@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import com.example.estatehouse.CartScreen;
 import com.example.estatehouse.DetailScreen;
 import com.example.estatehouse.R;
 import com.example.estatehouse.dao.CartDao;
+import com.example.estatehouse.dao.HouseDao;
+import com.example.estatehouse.entity.House;
 import com.example.estatehouse.entity.HouseCart;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,6 +30,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -45,10 +49,13 @@ public class CartAdapter extends BaseAdapter {
     private AlertDialog dialogBuy;
     private AlertDialog.Builder builderBuy;
     CartDao cartDao;
+    HouseDao houseDao;
 
     public CartAdapter(List<HouseCart> houseCarts, Context context){
         this.houseCarts = houseCarts;
         this.context = context;
+        cartDao = new CartDao(context);
+        houseDao = new HouseDao(context);
     }
 
     @Override
@@ -142,15 +149,16 @@ public class CartAdapter extends BaseAdapter {
 
     private void removeItem() {
         String cartId = hc.getDocumentId();
+        Log.w("CART_ID", cartId);
+        String imageHouse = hc.getImage();
+        Log.w("IMAGE HOUSE", imageHouse);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("carts").document(cartId)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(context, "Removing...", Toast.LENGTH_LONG).show();
-                        Intent intent= new Intent(context, CartScreen.class);
-                        context.startActivity(intent);
+                        cartDao.deleteCart(cartId);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -159,8 +167,43 @@ public class CartAdapter extends BaseAdapter {
                         Toast.makeText(context, "Error deleting document" + e, Toast.LENGTH_LONG).show();
                     }
                 });
-        hc=new HouseCart();
-        String documentId=hc.getDocumentId().toString();
-        cartDao.deleteCart(documentId);
+        db.collection("houses")
+                .whereEqualTo("image", imageHouse)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                House tempHouse = documentSnapshot.toObject(House.class);
+                                String tempHouseId = tempHouse.getDocumentId();
+                                db.collection("houses")
+                                        .document(tempHouseId)
+                                        .delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                houseDao.deleteHouse(tempHouseId);
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReferenceFromUrl("gs://estatehouse-4ee84.appspot.com");
+        StorageReference imageReference = storageReference.child("images/"+imageHouse);
+        imageReference
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("images storage", "success to delete image "+imageHouse);
+                    }
+                });
+
+        Toast.makeText(context, "Removing...", Toast.LENGTH_LONG).show();
+        Intent intent= new Intent(context, CartScreen.class);
+        context.startActivity(intent);
     }
 }
