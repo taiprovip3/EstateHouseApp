@@ -108,7 +108,7 @@ public class CartAdapter extends BaseAdapter {
         removeItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeItem();
+                removeItemFromCart();
             }
         });
         view.setOnClickListener(new View.OnClickListener() {
@@ -147,11 +147,28 @@ public class CartAdapter extends BaseAdapter {
         return view;
     }
 
+    private void removeItemFromCart() {
+        String cartId = hc.getDocumentId();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("carts").document(cartId)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        cartDao.deleteCart(cartId);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Failed to remove item from cart" + e, Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
     private void removeItem() {
         String cartId = hc.getDocumentId();
-        Log.w("CART_ID", cartId);
         String imageHouse = hc.getImage();
-        Log.w("IMAGE HOUSE", imageHouse);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("carts").document(cartId)
                 .delete()
