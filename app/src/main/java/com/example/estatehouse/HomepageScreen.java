@@ -90,7 +90,7 @@ public class HomepageScreen extends AppCompatActivity {
                             homepageAdapter = new HomepageAdapter(houses, HomepageScreen.this);
                             listView.setAdapter(homepageAdapter);
                         } else
-                            ToastPerfect.makeText(HomepageScreen.this, ToastPerfect.ERROR, "Could't load data, please check your network connection." + task.getException(), ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                            ToastPerfect.makeText(HomepageScreen.this, ToastPerfect.ERROR, "Could't load data." + task.getException(), ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     }
                 });
 
@@ -240,8 +240,13 @@ public class HomepageScreen extends AppCompatActivity {
         notiView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(HomepageScreen.this,NoticeScreen.class);
-                startActivity(intent);
+                if(isLogged()){
+                    Intent intent=new Intent(HomepageScreen.this,NoticeScreen.class);
+                    startActivity(intent);
+                } else{
+                    Intent intent = new Intent(HomepageScreen.this, LoginScreen.class);
+                    startActivity(intent);
+                }
             }
         });
         profileView.setOnClickListener(new View.OnClickListener() {

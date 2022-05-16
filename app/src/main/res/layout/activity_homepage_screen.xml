@@ -12,7 +12,8 @@
         android:id="@+id/hp_txtViewSeller"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="serif-monospace"
         android:text="Seller"
         android:textColor="#0826CF"
         android:textSize="20sp"
@@ -42,6 +43,7 @@
         android:id="@+id/hp_txtViewHelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="serif-monospace"
         android:text="Help"
         android:textColor="#0826CF"
         android:textSize="20sp"
@@ -61,7 +63,8 @@
         android:id="@+id/hp_txtViewLanguage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="serif-monospace"
         android:text="Language"
         android:textColor="#0826CF"
         android:textSize="20sp"
@@ -81,6 +84,7 @@
         android:id="@+id/hp_txtViewLogin"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:fontFamily="serif-monospace"
         android:text="Login"
         android:textAlignment="textEnd"
         android:textColor="#000000"
@@ -90,10 +94,11 @@
 
     <TextView
         android:id="@+id/hp_txtViewTitle"
-        android:layout_width="166dp"
+        android:layout_width="240dp"
         android:layout_height="73dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="serif-monospace"
         android:text="Find Your Best House"
         android:textColor="#000000"
         android:textSize="30sp"
@@ -107,6 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="serif-monospace"
         android:text="Location"
         android:textColor="#000000"
         android:textStyle="bold"
@@ -127,6 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="serif-monospace"
         android:text="Type"
         android:textColor="#000000"
         android:textStyle="bold"
@@ -142,6 +149,7 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner_cities">
 
         <RadioButton
+            android:fontFamily="serif-monospace"
             android:id="@+id/radioButtonBuy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -149,6 +157,7 @@
             android:text="Buy" />
 
         <RadioButton
+            android:fontFamily="serif-monospace"
             android:id="@+id/radioButtonRent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -156,6 +165,7 @@
     </RadioGroup>
 
     <Button
+        android:fontFamily="serif-monospace"
         android:id="@+id/hp_btnFilter"
         android:layout_width="92dp"
         android:layout_height="36dp"
@@ -179,9 +189,9 @@
         android:id="@+id/hp_profileIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
         app:layout_constraintBottom_toTopOf="@+id/hp_txtViewProfile"
-        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/hp_txtViewProfile"
+        app:layout_constraintStart_toStartOf="@+id/hp_txtViewProfile"
         app:srcCompat="@drawable/image_46" />
 
     <ImageView
@@ -208,6 +218,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
+        android:fontFamily="serif-monospace"
         android:text="Homepage"
         android:textColor="#000000"
         android:textStyle="bold"
@@ -218,6 +229,7 @@
         android:id="@+id/hp_txtViewNoti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="serif-monospace"
         android:text="Notifications"
         android:textColor="#000000"
         android:textStyle="bold"
@@ -231,6 +243,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="2dp"
+        android:fontFamily="serif-monospace"
         android:text="Profile"
         android:textColor="#000000"
         android:textStyle="bold"

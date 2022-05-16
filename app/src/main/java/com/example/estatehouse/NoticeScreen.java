@@ -53,8 +53,6 @@ public class NoticeScreen extends AppCompatActivity {
 
         notics = new ArrayList<Notic>();
         String email = currentUser.getEmail();
-        if(email == null)
-            email = "taito1doraemon@gmail.com";
         noticsRef.whereEqualTo("email", email)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -92,15 +90,5 @@ public class NoticeScreen extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         listView = findViewById(R.id.noti_listView);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        currentUser = mAuth.getCurrentUser();
-        if(currentUser == null){
-            Intent intent = new Intent(NoticeScreen.this, LoginScreen.class);
-            startActivity(intent);
-        }
     }
 }
