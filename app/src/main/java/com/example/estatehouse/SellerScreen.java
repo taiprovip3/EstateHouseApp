@@ -45,28 +45,48 @@ import vn.thanguit.toastperfect.ToastPerfect;
 
 public class SellerScreen extends AppCompatActivity {
 
-    FirebaseFirestore db;
-    CollectionReference houseRef;
-    FirebaseStorage storage;
-    StorageReference storageReference, ref;
-    FirebaseAuth mAuth;
-    FirebaseUser currentUser;
-    Button btnReset, btnRegister;
-    EditText edType, edPrice, edAddress, edSale, edTags, edDescription, edBedroom, edBathroom, edLivingArea;
-    ImageView homePage, imageChosen;
-    TextView btnChooseImage;
+    private FirebaseFirestore db;
+    private CollectionReference houseRef;
+    private FirebaseStorage storage;
+    private StorageReference storageReference, ref;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private Button btnReset, btnRegister;
+    private EditText edType, edPrice, edAddress, edSale, edTags, edDescription, edBedroom, edBathroom, edLivingArea;
+    private ImageView homePage, imageChosen;
+    private TextView btnChooseImage;
     private Uri filePath;
     private final int PICK_IMAGE_REQUEST = 71;
     private String randomImageSelectedNameGenerated = "house_description_1.png";
     private String documentId = UUID.randomUUID().toString();
-    HouseDao houseDao;
+    private HouseDao houseDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_screen);
 
-        anhXa();
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        houseRef = db.collection("houses");
+        btnChooseImage = findViewById(R.id.sll_btnChooseImage);
+        btnReset = findViewById(R.id.sll_btnReset);
+        btnRegister = findViewById(R.id.sll_btnRegister);
+        edType = findViewById(R.id.sll_edType);
+        edPrice = findViewById(R.id.sll_edPrice);
+        edAddress = findViewById(R.id.sll_edAddress);
+        edSale = findViewById(R.id.sll_edSale);
+        edTags = findViewById(R.id.sll_edTags);
+        edDescription = findViewById(R.id.sll_edDescription);
+        edBedroom = findViewById(R.id.sll_edBedroom);
+        edBathroom = findViewById(R.id.sll_edBathroom);
+        edLivingArea = findViewById(R.id.sll_edLivingArea);
+        homePage = findViewById(R.id.sll_btnBack);
+        imageChosen = findViewById(R.id.sll_imageChosen);
+        houseDao = new HouseDao(this);
+
         onClick();
 //        houseDao.deleteTable("Tags");
 //        houseDao.selectFromTableTest();
@@ -139,32 +159,10 @@ public class SellerScreen extends AppCompatActivity {
                     house.setImage(randomImageSelectedNameGenerated);
                     house.setDescription(description);
                     house.setSeller(seller);
-                    houseDao.registerHouse(house);
+//                    houseDao.registerHouse(house);
                 } else ToastPerfect.makeText(SellerScreen.this, ToastPerfect.ERROR, "Please fill out fields required!", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
             }
         });
-    }
-    private void anhXa() {
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-        houseRef = db.collection("houses");
-        btnChooseImage = findViewById(R.id.sll_btnChooseImage);
-        btnReset = findViewById(R.id.sll_btnReset);
-        btnRegister = findViewById(R.id.sll_btnRegister);
-        edType = findViewById(R.id.sll_edType);
-        edPrice = findViewById(R.id.sll_edPrice);
-        edAddress = findViewById(R.id.sll_edAddress);
-        edSale = findViewById(R.id.sll_edSale);
-        edTags = findViewById(R.id.sll_edTags);
-        edDescription = findViewById(R.id.sll_edDescription);
-        edBedroom = findViewById(R.id.sll_edBedroom);
-        edBathroom = findViewById(R.id.sll_edBathroom);
-        edLivingArea = findViewById(R.id.sll_edLivingArea);
-        homePage = findViewById(R.id.sll_btnBack);
-        imageChosen = findViewById(R.id.sll_imageChosen);
-        houseDao = new HouseDao(this);
     }
 
     private void uploadImage() {

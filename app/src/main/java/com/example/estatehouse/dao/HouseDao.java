@@ -82,10 +82,31 @@ public class HouseDao{
         db.close();
     }
 
+    public boolean isHouseExistedById(String houseId){
+        SQLiteDatabase db = instance.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Houses WHERE Houseid = ?", new String[] {String.valueOf(houseId)});
+        return cursor.moveToFirst();
+    }
+
     public void deleteHouse(String houseId){
         SQLiteDatabase db = instance.getWritableDatabase();
-        db.delete("Houses", "Houseid = " + houseId, null);
-        db.close();
+        db.delete("Houses", "Houseid = ?", new String[] {String.valueOf(houseId)});
         Log.d("DELETE HOUSE DAO", "DELETE SUCCESS A HOUSE FROM SQLITE");
+    }
+
+    public void updateHouse(House house, String houseId){
+        SQLiteDatabase db = instance.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Type", house.getType());
+        values.put("Cost", house.getCost());
+        values.put("Address", house.getAddress());
+        values.put("Sale", house.getSale());
+        values.put("Bedrooms", house.getBedrooms());
+        values.put("Bathrooms", house.getBathrooms());
+        values.put("Livingarea", house.getLivingarea());
+        values.put("Image", house.getImage());
+        values.put("Description", house.getDescription());
+        values.put("Seller", house.getSeller());
+        db.update("Houses", values, "Houseid = ?", new String[] {String.valueOf(houseId)});
     }
 }

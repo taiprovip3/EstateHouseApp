@@ -10,7 +10,7 @@ public class SQLiteDatabaseInstance extends SQLiteOpenHelper {
 
     private static SQLiteDatabaseInstance instance = null;
 
-    private static final String DATABASE_NAME = "EstateHouseApp.db";
+    private static final String DATABASE_NAME = "EstateHouse.db";
     private static final int DATABASE_VERSION = 1;
     private Context context;
 

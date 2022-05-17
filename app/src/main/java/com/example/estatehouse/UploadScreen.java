@@ -9,13 +9,21 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import com.example.estatehouse.entity.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -41,7 +49,13 @@ public class UploadScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_screen);
 
-        anhXa();
+        btnChoose = findViewById(R.id.up_btnChoose);
+        btnUpload = findViewById(R.id.up_btnUpload);
+        imageChosen= findViewById(R.id.up_imageChosen);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        btnBack = findViewById(R.id.up_btnBack);
+
         onClick();
     }
 
@@ -83,25 +97,48 @@ public class UploadScreen extends AppCompatActivity {
         });
     }
 
-    private void anhXa() {
-        btnChoose = findViewById(R.id.up_btnChoose);
-        btnUpload = findViewById(R.id.up_btnUpload);
-        imageChosen= findViewById(R.id.up_imageChosen);
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-        btnBack = findViewById(R.id.up_btnBack);
-    }
-
     private void uploadImage() {
         if(filePath != null){
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+            String randomNameAvatar = UUID.randomUUID().toString();
+            StorageReference ref = storageReference.child("images/" + randomNameAvatar);
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                            db.collection("users")
+                                    .whereEqualTo("email", currentUser.getEmail())
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if(task.isSuccessful()){
+                                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                                 User user = documentSnapshot.toObject(User.class);
+                                                 String nameOldAvatar = user.getAvatar();
+                                                 if(!nameOldAvatar.equalsIgnoreCase("image_6.png")){
+                                                     StorageReference ref2 = storageReference.child("images/" + nameOldAvatar);
+                                                     ref2
+                                                             .delete()
+                                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                 @Override
+                                                                 public void onSuccess(Void unused) {
+                                                                     Log.d("images storage", "success to delete image " + nameOldAvatar);
+                                                                 }
+                                                             });
+                                                 }
+                                                 db.collection("users")
+                                                         .document(user.getDocumentId())
+                                                         .update("avatar", randomNameAvatar);
+                                             }
+                                         }
+                                        }
+                                    });
                             progressDialog.dismiss();
                             ToastPerfect.makeText(UploadScreen.this, ToastPerfect.SUCCESS, "Uploaded successfully!", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                         }

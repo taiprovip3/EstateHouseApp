@@ -54,15 +54,24 @@ public class RegisterScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_screen);
 
-        anhXa();
+        db = FirebaseFirestore.getInstance();
+        userReference = db.collection("users");
+        txtEmail=(EditText) findViewById(R.id.txtEmail);
+        txtPassword=(EditText) findViewById(R.id.txtPassword);
+        txtRePassword=(EditText) findViewById(R.id.txtRePassword);
+        txtLoginHere=(TextView)findViewById(R.id.hp_txtViewLogin);
+        btnRegister=(Button)findViewById(R.id.btnRegister);
+        userDao = new UserDao(this);
+
         onClick();
     }
 
+    //METHOD ONCLICK
     private void onClick() {
         txtLoginHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(RegisterScreen.this, LoginScreen.class);
+                Intent intent = new Intent(RegisterScreen.this, LoginScreen.class);
                 startActivity(intent);
                 finish();
             }
@@ -70,22 +79,22 @@ public class RegisterScreen extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                email=txtEmail.getText().toString();
-                password=txtPassword.getText().toString();
-                rePassword=txtRePassword.getText().toString();
-                if(email.equals("")){
+                email = txtEmail.getText().toString();
+                password = txtPassword.getText().toString();
+                rePassword = txtRePassword.getText().toString();
+                if (email.equals("")) {
                     ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.ERROR, "Please enter username", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     return;
                 }
-                if(password.equals("")){
+                if (password.equals("")) {
                     ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.ERROR, "Please enter password", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     return;
                 }
-                if(rePassword.equals("")){
+                if (rePassword.equals("")) {
                     ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.ERROR, "Please enter re-enter password", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     return;
                 }
-                if(password.equals(rePassword)){
+                if (password.equals(rePassword)) {
                     mAuth = FirebaseAuth.getInstance();
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -93,13 +102,13 @@ public class RegisterScreen extends AppCompatActivity {
                                 public void onComplete(@Nonnull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         Map<String, Object> userObject = new HashMap<>();
-                                        String firstName="Un";
-                                        String lastName="know";
-                                        String role="member";
-                                        String location="US";
-                                        String phoneNumber="";
-                                        double balance=0.0;
-                                        String avatar="image_6.png";
+                                        String firstName = "Un";
+                                        String lastName = "know";
+                                        String role = "member";
+                                        String location = "US";
+                                        String phoneNumber = "";
+                                        double balance = 999999.0;
+                                        String avatar = "image_6.png";
                                         userObject.put("email", email);
                                         userObject.put("password", password);
                                         userObject.put("first_name", firstName);
@@ -113,8 +122,8 @@ public class RegisterScreen extends AppCompatActivity {
                                         userReference
                                                 .document(documentId)
                                                 .set(userObject);
-                                        User user=new User(documentId, email, firstName, lastName, role, location, phoneNumber, password, balance, avatar);
-                                        userDao.addUser(user);
+                                        User user = new User(documentId, email, firstName, lastName, role, location, phoneNumber, password, balance, avatar);
+//                                        userDao.addUser(user);
                                         ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.SUCCESS, "Register success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                         emptyField();
                                         Intent intent = new Intent(RegisterScreen.this, LoginScreen.class);
@@ -124,22 +133,11 @@ public class RegisterScreen extends AppCompatActivity {
                                     }
                                 }
                             });
-                }
-                else ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.ERROR, "Password and Re-enter password are not the same", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                } else
+                    ToastPerfect.makeText(RegisterScreen.this, ToastPerfect.ERROR, "Password and Re-enter password are not the same", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void anhXa() {
-        db = FirebaseFirestore.getInstance();
-        userReference = db.collection("users");
-        txtEmail=(EditText) findViewById(R.id.txtEmail);
-        txtPassword=(EditText) findViewById(R.id.txtPassword);
-        txtRePassword=(EditText) findViewById(R.id.txtRePassword);
-        txtLoginHere=(TextView)findViewById(R.id.hp_txtViewLogin);
-        btnRegister=(Button)findViewById(R.id.btnRegister);
-        userDao=new UserDao(this);
-    }
+    }//end onClick method
 
     private void emptyField() {
         txtEmail.setText("");

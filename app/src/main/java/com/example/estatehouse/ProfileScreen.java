@@ -72,8 +72,7 @@ public class ProfileScreen extends AppCompatActivity {
                             if(task.isSuccessful()){
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     user = document.toObject(User.class);
-                                    user.setDocumentId(document.getId());
-                                    imageReference = storageReference.child("images/"+user.getAvatar());
+                                    imageReference = storageReference.child("images/" + user.getAvatar());
                                     imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {

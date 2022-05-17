@@ -54,8 +54,6 @@ public class CartAdapter extends BaseAdapter {
     public CartAdapter(List<HouseCart> houseCarts, Context context){
         this.houseCarts = houseCarts;
         this.context = context;
-        cartDao = new CartDao(context);
-        houseDao = new HouseDao(context);
     }
 
     @Override
@@ -77,6 +75,9 @@ public class CartAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         if(view == null)
             view = LayoutInflater.from(context).inflate(R.layout.activity_cart_itemview, viewGroup, false);
+
+        cartDao = new CartDao(view.getContext());
+        houseDao = new HouseDao(view.getContext());
 
         ImageView imageView = view.findViewById(R.id.cart_Image);
         TextView costView = view.findViewById(R.id.cart_Cost);
@@ -155,7 +156,10 @@ public class CartAdapter extends BaseAdapter {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        cartDao.deleteCart(cartId);
+//                        cartDao.deleteCart(cartId);
+                        Toast.makeText(context, "Removing...", Toast.LENGTH_LONG).show();
+                        Intent intent= new Intent(context, CartScreen.class);
+                        context.startActivity(intent);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -175,7 +179,7 @@ public class CartAdapter extends BaseAdapter {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        cartDao.deleteCart(cartId);
+//                        cartDao.deleteCart(cartId);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -200,7 +204,7 @@ public class CartAdapter extends BaseAdapter {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
-                                                houseDao.deleteHouse(tempHouseId);
+//                                                houseDao.deleteHouse(tempHouseId);
                                             }
                                         });
                             }
@@ -219,7 +223,7 @@ public class CartAdapter extends BaseAdapter {
                     }
                 });
 
-        Toast.makeText(context, "Removing...", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Paying...", Toast.LENGTH_LONG).show();
         Intent intent= new Intent(context, CartScreen.class);
         context.startActivity(intent);
     }

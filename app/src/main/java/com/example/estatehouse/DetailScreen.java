@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.estatehouse.dao.CartDao;
+import com.example.estatehouse.dao.HouseDao;
 import com.example.estatehouse.entity.House;
 import com.example.estatehouse.entity.HouseCart;
 import com.example.estatehouse.entity.User;
@@ -51,21 +53,45 @@ public class DetailScreen extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private CollectionReference cartReference, userReference;
-    String imageHouse, addressHouse, documentIdHouse, descriptionHouse, sellerHouse, typeHouse;
-    double priceHouse;
-    int bedroomHouse, bathroomHouse, livingareaHouse;
-    User user;
-    AlertDialog dialogBuy;
-    AlertDialog.Builder builderBuy;
-    CartDao cartDao;
+    private CollectionReference cartReference, userReference, houseReference;
+    private String imageHouse, addressHouse, documentIdHouse, descriptionHouse, sellerHouse, typeHouse;
+    private double priceHouse;
+    private int bedroomHouse, bathroomHouse, livingareaHouse;
+    private User user;
+    private AlertDialog dialogBuy;
+    private AlertDialog.Builder builderBuy;
+    private CartDao cartDao;
+    private HouseDao houseDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_screen);
 
-        anhXa();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        db = FirebaseFirestore.getInstance();
+        cartReference = db.collection("carts");
+        userReference = db.collection("users");
+        houseReference = db.collection("houses");
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReferenceFromUrl("gs://estatehouse-4ee84.appspot.com");
+        imageHouseView = findViewById(R.id.dt_imageView);
+        btnBuy = findViewById(R.id.dt_btnBuy);
+        btnAddToCart = findViewById(R.id.dt_addToCart);
+        priceHouseView = findViewById(R.id.dt_priceView);
+        addressHouseView = findViewById(R.id.dt_addressView);
+        bedroomNumberView = findViewById(R.id.dt_bedNumber);
+        bathroomNumberView = findViewById(R.id.dt_bathRooms);
+        livingareView = findViewById(R.id.dt_livingareView);
+        sellerView = findViewById(R.id.dt_sellerView);
+        descriptionView = findViewById(R.id.dt_descriptionView);
+        typeView = findViewById(R.id.dt_typeView);
+        btnBack = findViewById(R.id.dt_btnBack);
+        balanceView = findViewById(R.id.dt_balanceView);
+        cartDao = new CartDao(this);
+        houseDao = new HouseDao(this);
+
         onClick();
         
         Intent intent = getIntent();
@@ -156,7 +182,7 @@ public class DetailScreen extends AppCompatActivity {
                 cart.setImage(imageHouse);
                 cartReference.document(documentId).set(cart);
                 ToastPerfect.makeText(DetailScreen.this, ToastPerfect.SUCCESS, "Added success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
-                cartDao.addToCart(cart);
+//                cartDao.addToCart(cart);
             }
         });
         btnBuy.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +206,34 @@ public class DetailScreen extends AppCompatActivity {
                             balanceView.setText("$"+moneyLeft);
                             userReference.document(user.getDocumentId())
                                     .update("balance", moneyLeft);
+                            userReference.whereEqualTo("seller", sellerHouse)
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                            if(task.isSuccessful()){
+                                                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                                                    User sellerUser = documentSnapshot.toObject(User.class);
+                                                                    userReference.document(sellerUser.getDocumentId())
+                                                                            .update("balance", sellerUser.getBalance() + priceHouse);
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                            houseReference.document(documentIdHouse)
+                                    .delete();
+//                            houseDao.deleteHouse(documentIdHouse);
+                            imageReference
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Log.d("images storage", "success to delete image "+imageHouse);
+                                        }
+                                    });
                             ToastPerfect.makeText(DetailScreen.this, ToastPerfect.SUCCESS, "You purchased success", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_LONG).show();
+                            Intent intent = new Intent(DetailScreen.this, HomepageScreen.class);
+                            startActivity(intent);
                         }
                     }
                 });
@@ -188,29 +241,5 @@ public class DetailScreen extends AppCompatActivity {
                 dialogBuy.show();
             }
         });
-    }
-
-    private void anhXa() {
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
-        db = FirebaseFirestore.getInstance();
-        cartReference = db.collection("carts");
-        userReference = db.collection("users");
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReferenceFromUrl("gs://estatehouse-4ee84.appspot.com");
-        imageHouseView = findViewById(R.id.dt_imageView);
-        btnBuy = findViewById(R.id.dt_btnBuy);
-        btnAddToCart = findViewById(R.id.dt_addToCart);
-        priceHouseView = findViewById(R.id.dt_priceView);
-        addressHouseView = findViewById(R.id.dt_addressView);
-        bedroomNumberView = findViewById(R.id.dt_bedNumber);
-        bathroomNumberView = findViewById(R.id.dt_bathRooms);
-        livingareView = findViewById(R.id.dt_livingareView);
-        sellerView = findViewById(R.id.dt_sellerView);
-        descriptionView = findViewById(R.id.dt_descriptionView);
-        typeView = findViewById(R.id.dt_typeView);
-        btnBack = findViewById(R.id.dt_btnBack);
-        balanceView = findViewById(R.id.dt_balanceView);
-        cartDao = new CartDao(this);
     }
 }
