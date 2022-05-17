@@ -155,7 +155,7 @@ public class CartAdapter extends BaseAdapter {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        cartDao.deleteCart(cartId);
+//                        cartDao.deleteCart(cartId);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -175,7 +175,7 @@ public class CartAdapter extends BaseAdapter {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        cartDao.deleteCart(cartId);
+//                        cartDao.deleteCart(cartId);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -200,7 +200,7 @@ public class CartAdapter extends BaseAdapter {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
-                                                houseDao.deleteHouse(tempHouseId);
+//                                                houseDao.deleteHouse(tempHouseId);
                                             }
                                         });
                             }
