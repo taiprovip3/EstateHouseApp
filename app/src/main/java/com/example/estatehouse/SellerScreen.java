@@ -87,6 +87,16 @@ public class SellerScreen extends AppCompatActivity {
         imageChosen = findViewById(R.id.sll_imageChosen);
         houseDao = new HouseDao(this);
 
+        edType.setText("RENT");
+        edPrice.setText("21000");
+        edAddress.setText("56, VENEZUELA, DALLAS, STREET 56");
+        edSale.setText("5");
+        edTags.setText("VENEZUELA");
+        edDescription.setText("House have beautiful view and wonder garden!");
+        edBedroom.setText("3");
+        edBathroom.setText("4");
+        edLivingArea.setText("256");
+
         onClick();
 //        houseDao.deleteTable("Tags");
 //        houseDao.selectFromTableTest();
@@ -146,19 +156,19 @@ public class SellerScreen extends AppCompatActivity {
                     ToastPerfect.makeText(SellerScreen.this, ToastPerfect.SUCCESS, "Register successfully product :: " + documentId, ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                     uploadImage();
                     emptyField();
-                    House house = new House();
-                    house.setDocumentId(documentId);
-                    house.setType(type);
-                    house.setCost(price);
-                    house.setAddress(address);
-                    house.setSale(sale);
-                    house.setTags(tags);
-                    house.setBedrooms(bedroom);
-                    house.setBathrooms(bathroom);
-                    house.setLivingarea(livingArea);
-                    house.setImage(randomImageSelectedNameGenerated);
-                    house.setDescription(description);
-                    house.setSeller(seller);
+//                    House house = new House();
+//                    house.setDocumentId(documentId);
+//                    house.setType(type);
+//                    house.setCost(price);
+//                    house.setAddress(address);
+//                    house.setSale(sale);
+//                    house.setTags(tags);
+//                    house.setBedrooms(bedroom);
+//                    house.setBathrooms(bathroom);
+//                    house.setLivingarea(livingArea);
+//                    house.setImage(randomImageSelectedNameGenerated);
+//                    house.setDescription(description);
+//                    house.setSeller(seller);
 //                    houseDao.registerHouse(house);
                 } else ToastPerfect.makeText(SellerScreen.this, ToastPerfect.ERROR, "Please fill out fields required!", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
             }

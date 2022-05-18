@@ -64,6 +64,10 @@ public class RegisterScreen extends AppCompatActivity {
         userDao = new UserDao(this);
 
         onClick();
+
+        txtEmail.setText("client@gmail.com");
+        txtPassword.setText("123123az");
+        txtRePassword.setText("123123az");
     }
 
     //METHOD ONCLICK

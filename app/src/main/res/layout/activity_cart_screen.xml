@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#1AFDE8"
+    android:background="@drawable/gradient_background"
     tools:context=".CartScreen">
 
     <TextView
@@ -12,10 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="164dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="165dp"
         android:text="YOUR CARTS"
         android:textColor="#673AB7"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +43,7 @@
         android:layout_marginEnd="166dp"
         android:text="Phan Tan Tai"
         android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cart_avatarView" />
@@ -54,6 +56,7 @@
         android:layout_marginEnd="176dp"
         android:text="Member"
         android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cart_fullNameView" />
@@ -65,11 +68,11 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="4dp"
-        android:background="#E1D6D6"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cart_roleView" />
+        app:layout_constraintTop_toBottomOf="@+id/cart_balanceView" />
 
     <Button
         android:id="@+id/button5"
@@ -79,9 +82,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="#A174F1"
+        android:backgroundTint="#79EFE5"
         android:enabled="false"
         android:text="YOUR CART"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/view3"
         app:layout_constraintEnd_toStartOf="@+id/cart_btnSetting"
         app:layout_constraintStart_toEndOf="@+id/cart_btnBalance"
@@ -94,7 +98,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="#FFFFFF"
         android:text="Balance"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/view3"
         app:layout_constraintStart_toStartOf="@+id/view3"
         app:layout_constraintTop_toTopOf="@+id/view3" />
@@ -106,7 +112,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="#FFFFFF"
         android:text="Setting"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/view3"
         app:layout_constraintEnd_toEndOf="@+id/view3"
         app:layout_constraintTop_toTopOf="@+id/view3" />
@@ -134,8 +142,10 @@
         android:id="@+id/cart_balanceView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="$99.999"
-        android:textColor="#4CAF50"
+        android:textColor="#000000"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/cart_fullNameView"
         app:layout_constraintStart_toStartOf="@+id/cart_fullNameView"

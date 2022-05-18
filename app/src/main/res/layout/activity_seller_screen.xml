@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#AEEDE5"
-    android:backgroundTint="#AEEDE5"
+    android:background="@drawable/background_gradient"
     tools:context=".SellerScreen">
 
     <EditText
         android:id="@+id/sll_edDescription"
-        android:layout_width="335dp"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="83dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
@@ -29,8 +28,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:fontFamily="serif-monospace"
         android:text="Describe"
         android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sll_edDescription" />
 
@@ -39,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_marginBottom="4dp"
-        android:background="#EBF4EF"
+        android:background="@drawable/background_gradient"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -80,8 +82,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="serif-monospace"
         android:text="Living area"
         android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sll_edDescription" />
 
@@ -90,8 +95,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:fontFamily="serif-monospace"
         android:text="Bathroom"
         android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/sll_edLivingArea"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toEndOf="@+id/sll_edBedroom"
@@ -103,8 +111,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
+        android:fontFamily="serif-monospace"
         android:text="Bedroom"
         android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sll_edDescription" />
 
@@ -140,8 +151,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="138dp"
         android:layout_marginEnd="139dp"
+        android:fontFamily="serif-monospace"
         android:text="Submit your products"
         android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
@@ -150,29 +163,42 @@
         android:id="@+id/sll_btnChooseImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="serif-monospace"
         android:text="Choose image"
-        android:textColor="#1533DA"
-        android:textStyle="italic"
+        android:textColor="#0337F4"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sll_edBedroom" />
+
+    <ImageView
+        android:id="@+id/sll_imageChosen"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/view5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sll_btnChooseImage"
+        app:srcCompat="@drawable/can_ho_nha_mat_dat_1_1" />
 
     <EditText
         android:id="@+id/sll_edType"
-        android:layout_width="0dp"
+        android:layout_width="346dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="'RENT' or 'BUY'"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView50"
-        app:layout_constraintTop_toBottomOf="@+id/sll_imageChosen" />
+        app:layout_constraintTop_toBottomOf="@+id/pr_updateProfile" />
 
     <TextView
         android:id="@+id/textView50"
@@ -180,8 +206,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="serif-monospace"
         android:text="Type"
         android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sll_edType" />
 
@@ -206,8 +235,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="serif-monospace"
         android:text="Price"
         android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sll_edPrice" />
 
@@ -217,8 +249,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="serif-monospace"
         android:text="Address"
         android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sll_edAddress" />
 
@@ -243,8 +278,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="serif-monospace"
         android:text="% Sale"
         android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sll_edSale" />
 
@@ -269,8 +307,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="serif-monospace"
         android:text="Tags"
         android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sll_edTags" />
 
@@ -295,6 +336,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="4dp"
+        android:backgroundTint="#3A9393"
         android:text="Reset"
         app:layout_constraintBottom_toBottomOf="@+id/view5"
         app:layout_constraintStart_toStartOf="@+id/view5" />
@@ -305,19 +347,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
+        android:backgroundTint="#3A9393"
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="@+id/view5"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageView
-        android:id="@+id/sll_imageChosen"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="@+id/sll_btnChooseImage"
-        app:layout_constraintStart_toStartOf="@+id/sll_btnChooseImage"
-        app:layout_constraintTop_toBottomOf="@+id/sll_btnChooseImage"
-        app:srcCompat="@drawable/can_ho_nha_mat_dat_1_1" />
 
     <ImageView
         android:id="@+id/sll_btnBack"

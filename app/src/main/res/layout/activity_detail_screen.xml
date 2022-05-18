@@ -11,12 +11,12 @@
         android:layout_width="160dp"
         android:layout_height="42dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginBottom="8dp"
         android:background="#80F3BD"
         android:text="Buy now"
         android:textColor="#000000"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dt_descriptionView" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/dt_livingareView"
@@ -75,6 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:text="$56.000"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +117,8 @@
     <ImageView
         android:id="@+id/dt_imageView"
         android:layout_width="409dp"
-        android:layout_height="166dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="48dp"
         android:src="@drawable/house_description_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -138,7 +140,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/image_16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dt_typeView" />
@@ -179,7 +181,7 @@
         android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="86dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="24dp"
         android:background="#EFC9C9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -265,7 +267,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:text="House's descriptions:"
         android:textColor="#000000"
         android:textStyle="bold"
@@ -289,13 +291,13 @@
         android:id="@+id/dt_addToCart"
         android:layout_width="179dp"
         android:layout_height="41dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="9dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:background="#BCB5B5"
         android:text="Add to cart"
         android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dt_descriptionView" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/dt_btnBack"
@@ -304,7 +306,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dt_imageView"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/image_14" />
 
     <ImageView
