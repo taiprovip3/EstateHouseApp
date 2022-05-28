@@ -99,7 +99,7 @@ public class StartScreen extends AppCompatActivity {
                                 }
                             }
                         });
-                Intent intent = new Intent(StartScreen.this, HomepageScreen.class);
+                Intent intent = new Intent(StartScreen.this, THCK.class);
                 startActivity(intent);
             }
         });

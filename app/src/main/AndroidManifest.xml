@@ -10,57 +10,50 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EstateHouse">
         <activity
+            android:name=".THCK"
+            android:exported="false" />
+        <activity
             android:name=".StartScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".BalanceScreen"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".NoticeScreen"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".HomepageScreen"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".SellerScreen"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".HelpScreen"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".UploadScreen"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".CartScreen"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".DetailScreen"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".LoginScreen"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".RegisterScreen"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ProfileScreen"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>
